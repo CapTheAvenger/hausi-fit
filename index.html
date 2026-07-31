@@ -1082,6 +1082,14 @@ document.getElementById('themebtn').onclick = ()=>{
   const cur = S.theme==='auto' ? (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light') : S.theme;
   setTheme(cur==='dark'?'light':'dark');
 };
+/* Select-all on focus: tap a field and type straight over the old value */
+document.addEventListener('focusin', (e)=>{
+  const el = e.target;
+  if(!(el instanceof HTMLInputElement)) return;
+  if(el.type==='number' || (el.type==='text' && el.closest('.numwrap'))){
+    setTimeout(()=>{ try{ el.select(); }catch(_){ } }, 0);
+  }
+});
 if(S.theme && S.theme!=='auto') document.documentElement.setAttribute('data-theme', S.theme);
 renderAll();
 </script>
