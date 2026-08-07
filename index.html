@@ -388,7 +388,7 @@ de:{
   myday_pick:"Lebensmittel auswählen", myday_calc:"Optimalen Tag berechnen",
   myday_result:"Dein Tagesplan", myday_amount:"Menge", myday_total:"Summe",
   myday_cov:"Nährstoff-Abdeckung", myday_tocart:"In den Einkaufswagen übernehmen", myday_added:"In den Einkaufswagen übernommen ✓",
-  myday_few:"Wähle mindestens 4 Lebensmittel aus.",
+  myday_few:"Wähle mindestens 4 Lebensmittel aus.", myday_sync:"Werte aus dem Rechner übernehmen",
   myday_hint:"Tipp: Werte unter 100 %? Nimm passende Quellen dazu (z. B. fetter Fisch für Omega-3/Vitamin D) – oder decke sie gezielt per Supplement ab.",
   micro_magnesium:"Magnesium", micro_zink:"Zink", micro_eisen:"Eisen", micro_calcium:"Calcium",
   micro_kalium:"Kalium", micro_vitd:"Vitamin D", micro_b12:"Vitamin B12", micro_omega3:"Omega-3 (EPA+DHA)",
@@ -510,7 +510,7 @@ en:{
   myday_pick:"Choose foods", myday_calc:"Calculate optimal day",
   myday_result:"Your day plan", myday_amount:"Amount", myday_total:"Total",
   myday_cov:"Nutrient coverage", myday_tocart:"Add to shopping cart", myday_added:"Added to shopping cart ✓",
-  myday_few:"Select at least 4 foods.",
+  myday_few:"Select at least 4 foods.", myday_sync:"Use values from calculator",
   myday_hint:"Tip: anything below 100%? Add matching sources (e.g. fatty fish for omega-3/vitamin D) – or cover it with a supplement.",
   micro_magnesium:"Magnesium", micro_zink:"Zinc", micro_eisen:"Iron", micro_calcium:"Calcium",
   micro_kalium:"Potassium", micro_vitd:"Vitamin D", micro_b12:"Vitamin B12", micro_omega3:"Omega-3 (EPA+DHA)",
@@ -632,7 +632,7 @@ es:{
   myday_pick:"Elegir alimentos", myday_calc:"Calcular día óptimo",
   myday_result:"Tu plan del día", myday_amount:"Cantidad", myday_total:"Total",
   myday_cov:"Cobertura de nutrientes", myday_tocart:"Añadir al carrito", myday_added:"Añadido al carrito ✓",
-  myday_few:"Elige al menos 4 alimentos.",
+  myday_few:"Elige al menos 4 alimentos.", myday_sync:"Usar valores de la calculadora",
   myday_hint:"Consejo: ¿algo por debajo del 100%? Añade fuentes adecuadas (p. ej. pescado azul para omega-3/vitamina D) – o cúbrelo con un suplemento.",
   micro_magnesium:"Magnesio", micro_zink:"Zinc", micro_eisen:"Hierro", micro_calcium:"Calcio",
   micro_kalium:"Potasio", micro_vitd:"Vitamina D", micro_b12:"Vitamina B12", micro_omega3:"Omega-3 (EPA+DHA)",
@@ -1519,13 +1519,13 @@ function renderFood(){
   }
   else if(S.foodTab==='myday'){
     const md=S.myday;
-    if(!md.kcal) md.kcal=Math.round(calcAll().intake);
-    if(!md.prot) md.prot=Math.round(macroCalc(md.kcal).p);
+    if(!md.kcalMan) md.kcal=Math.round(calcAll().intake);
+    if(!md.protMan) md.prot=Math.round(macroCalc(md.kcal).p);
     h += `<h2 style="margin-top:4px">${esc(t('myday_title'))}</h2><div class="note" style="margin:0 2px 10px">${esc(t('myday_sub'))}</div>`;
     h += `<div class="card"><div style="display:flex;gap:10px">
-      <div class="fld" style="flex:1;margin:0"><label>${esc(t('myday_kcal'))}</label><input type="number" inputmode="numeric" value="${md.kcal}" onfocus="this.select()" onchange="S.myday.kcal=+this.value||0;save()"></div>
-      <div class="fld" style="flex:1;margin:0"><label>${esc(t('myday_protein'))}</label><input type="number" inputmode="numeric" value="${md.prot}" onfocus="this.select()" onchange="S.myday.prot=+this.value||0;save()"></div>
-    </div></div>`;
+      <div class="fld" style="flex:1;margin:0"><label>${esc(t('myday_kcal'))}</label><input type="number" inputmode="numeric" value="${md.kcal}" onfocus="this.select()" onchange="S.myday.kcal=+this.value||0;S.myday.kcalMan=true;save()"></div>
+      <div class="fld" style="flex:1;margin:0"><label>${esc(t('myday_protein'))}</label><input type="number" inputmode="numeric" value="${md.prot}" onfocus="this.select()" onchange="S.myday.prot=+this.value||0;S.myday.protMan=true;save()"></div>
+    </div>${(md.kcalMan||md.protMan)? `<button class="btn sec" style="width:100%;margin-top:8px;font-size:12.5px" onclick="S.myday.kcalMan=false;S.myday.protMan=false;save();renderFood()">↻ ${esc(t('myday_sync'))}</button>`:''}</div>`;
     h += `<h3 style="margin:10px 2px 4px">${esc(t('myday_pick'))}</h3>`;
     const NN=DATA.nutrition;
     for(const grp of ['macroCats','otherCats']) for(const cat of NN[grp]){
