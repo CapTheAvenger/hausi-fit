@@ -256,6 +256,8 @@ details.acc .accbody{padding:0 14px 12px}
 .covrow .cv{flex:0 0 44px;font-size:12px;font-weight:650;text-align:right}
 .pickchip{display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border-radius:10px;border:1px solid var(--border);background:var(--surface);font-size:12.5px;margin:3px 3px 0 0;cursor:pointer;color:var(--ink)}
 .pickchip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.pickchip.must{background:#b8860b;border-color:#e2a400;color:#fff}
+.mdetrow td{background:var(--surface2);font-size:12px;padding:8px 10px}
 </style>
 </head>
 <body>
@@ -389,7 +391,7 @@ de:{
   myday_result:"Dein Tagesplan", myday_amount:"Menge", myday_total:"Summe",
   myday_cov:"Nährstoff-Abdeckung", myday_tocart:"In den Einkaufswagen übernehmen", myday_added:"In den Einkaufswagen übernommen ✓",
   myday_few:"Wähle mindestens 4 Lebensmittel aus.", myday_sync:"Werte aus dem Rechner übernehmen",
-  myday_gaps:"Noch nicht voll gedeckt", myday_gaps_note:"Tippe einen Vorschlag an, um ihn in deinen Pool aufzunehmen und neu zu berechnen – oder decke den Nährstoff per Supplement ab (siehe Supplement-Guide unter Mehr).",
+  myday_gaps:"Noch nicht voll gedeckt", myday_pick_hint:"1× tippen = kann dabei sein · 2× tippen = ⭐ muss dabei sein · 3× = abwählen", myday_rowhint:"Tippe eine Zeile, um zu sehen, was dieses Lebensmittel liefert.", myday_nomicro:"Kaum Mikronährstoffe – dient vor allem als Volumen-/Kalorienfüller.", myday_gaps_note:"Tippe einen Vorschlag an, um ihn in deinen Pool aufzunehmen und neu zu berechnen – oder decke den Nährstoff per Supplement ab (siehe Supplement-Guide unter Mehr).",
   msupp_magnesium:"Supplement-Option: Magnesium 200–400 mg/Tag", msupp_zink:"Supplement-Option: Zink 10–15 mg/Tag", msupp_eisen:"Eisen nur nach Bluttest beim Arzt supplementieren", msupp_calcium:"Supplement-Option: Calcium 500 mg/Tag – oder mehr Milchprodukte/Käse", msupp_kalium:"Besser über Lebensmittel decken: Kartoffeln, Bohnen, Tomatenmark", msupp_vitd:"Supplement-Option: Vitamin D3 1.000–2.000 IE/Tag", msupp_b12:"Supplement-Option: Vitamin B12 – v. a. bei wenig Fleisch/Fisch", msupp_omega3:"Supplement-Option: Omega-3 (EPA/DHA) 1–2 g/Tag – Fischöl oder Algenöl",
   myday_hint:"Tipp: Werte unter 100 %? Nimm passende Quellen dazu (z. B. fetter Fisch für Omega-3/Vitamin D) – oder decke sie gezielt per Supplement ab.",
   micro_magnesium:"Magnesium", micro_zink:"Zink", micro_eisen:"Eisen", micro_calcium:"Calcium",
@@ -513,7 +515,7 @@ en:{
   myday_result:"Your day plan", myday_amount:"Amount", myday_total:"Total",
   myday_cov:"Nutrient coverage", myday_tocart:"Add to shopping cart", myday_added:"Added to shopping cart ✓",
   myday_few:"Select at least 4 foods.", myday_sync:"Use values from calculator",
-  myday_gaps:"Not fully covered yet", myday_gaps_note:"Tap a suggestion to add it to your pool and recalculate – or cover the nutrient with a supplement (see Supplement Guide under More).",
+  myday_gaps:"Not fully covered yet", myday_pick_hint:"Tap once = can be included · tap twice = ⭐ must be included · 3× = deselect", myday_rowhint:"Tap a row to see what this food provides.", myday_nomicro:"Hardly any micronutrients – mainly serves as volume/calorie filler.", myday_gaps_note:"Tap a suggestion to add it to your pool and recalculate – or cover the nutrient with a supplement (see Supplement Guide under More).",
   msupp_magnesium:"Supplement option: magnesium 200–400 mg/day", msupp_zink:"Supplement option: zinc 10–15 mg/day", msupp_eisen:"Only supplement iron after a blood test", msupp_calcium:"Supplement option: calcium 500 mg/day – or more dairy/cheese", msupp_kalium:"Better covered via food: potatoes, beans, tomato paste", msupp_vitd:"Supplement option: vitamin D3 1,000–2,000 IU/day", msupp_b12:"Supplement option: vitamin B12 – especially with little meat/fish", msupp_omega3:"Supplement option: omega-3 (EPA/DHA) 1–2 g/day – fish or algae oil",
   myday_hint:"Tip: anything below 100%? Add matching sources (e.g. fatty fish for omega-3/vitamin D) – or cover it with a supplement.",
   micro_magnesium:"Magnesium", micro_zink:"Zinc", micro_eisen:"Iron", micro_calcium:"Calcium",
@@ -637,7 +639,7 @@ es:{
   myday_result:"Tu plan del día", myday_amount:"Cantidad", myday_total:"Total",
   myday_cov:"Cobertura de nutrientes", myday_tocart:"Añadir al carrito", myday_added:"Añadido al carrito ✓",
   myday_few:"Elige al menos 4 alimentos.", myday_sync:"Usar valores de la calculadora",
-  myday_gaps:"Aún no cubierto del todo", myday_gaps_note:"Toca una sugerencia para añadirla a tu grupo y recalcular – o cubre el nutriente con un suplemento (ver Guía de suplementos en Más).",
+  myday_gaps:"Aún no cubierto del todo", myday_pick_hint:"1 toque = puede estar · 2 toques = ⭐ debe estar · 3 = quitar", myday_rowhint:"Toca una fila para ver qué aporta este alimento.", myday_nomicro:"Apenas micronutrientes – sirve sobre todo como volumen/relleno calórico.", myday_gaps_note:"Toca una sugerencia para añadirla a tu grupo y recalcular – o cubre el nutriente con un suplemento (ver Guía de suplementos en Más).",
   msupp_magnesium:"Opción de suplemento: magnesio 200–400 mg/día", msupp_zink:"Opción de suplemento: zinc 10–15 mg/día", msupp_eisen:"Suplementar hierro solo tras un análisis de sangre", msupp_calcium:"Opción de suplemento: calcio 500 mg/día – o más lácteos/queso", msupp_kalium:"Mejor cubrirlo con alimentos: patatas, alubias, concentrado de tomate", msupp_vitd:"Opción de suplemento: vitamina D3 1.000–2.000 UI/día", msupp_b12:"Opción de suplemento: vitamina B12 – sobre todo con poca carne/pescado", msupp_omega3:"Opción de suplemento: omega-3 (EPA/DHA) 1–2 g/día – aceite de pescado o de algas",
   myday_hint:"Consejo: ¿algo por debajo del 100%? Añade fuentes adecuadas (p. ej. pescado azul para omega-3/vitamina D) – o cúbrelo con un suplemento.",
   micro_magnesium:"Magnesio", micro_zink:"Zinc", micro_eisen:"Hierro", micro_calcium:"Calcio",
@@ -1374,7 +1376,14 @@ function drawChart(arr, unit){
 /* ================= Nutrition ================= */
 function setMicroAmt(n,v){ v=+v||0; if(v<=0) delete S.microAmt[n]; else S.microAmt[n]=v; save(); renderFood(); }
 function toggleCart(n){ if(S.cart[n]) delete S.cart[n]; else S.cart[n]=true; save(); renderFood(); }
-function toggleMydaySel(n){ if(S.myday.sel[n]) delete S.myday.sel[n]; else S.myday.sel[n]=1; window._mydayRes=null; save(); renderFood(); }
+function toggleMydaySel(n){
+  const cur = S.myday.sel[n]||0;
+  if(cur===0) S.myday.sel[n]=1;
+  else if(cur===1) S.myday.sel[n]=2;
+  else delete S.myday.sel[n];
+  window._mydayRes=null; save(); renderFood();
+}
+function toggleMydayRow(i){ const el=document.getElementById('mdet'+i); if(el) el.style.display = el.style.display==='none' ? '' : 'none'; }
 const MYDAY_MAX = {protein:400, carbs:350, fat:60, veg:500, fruit:400, basics:60};
 const MYDAY_MINUSE = {protein:50, carbs:30, fat:10, veg:50, fruit:50, basics:10};
 const MYDAY_SPECIAL = {'Proteinpulver (Whey)':[10,60],'Olivenöl':[5,30],'Rapsöl':[5,30],'Leinöl':[5,20],'Harzer Käse':[20,150],'Vollkornbrot':[40,200],'Haferflocken':[30,150],'Vollkornnudeln':[40,180],'Erdnussmus (100%)':[10,50],'Avocado':[30,200],'Sojasauce':[5,25],'Tomatenmark':[10,80],'Senf':[5,40],'Reiswaffeln':[10,80],'Proteinriegel':[20,70],'Eier':[50,220],'Chiasamen':[5,40],'Leinsamen':[5,40],'Kürbiskerne':[5,60],'Mandeln':[10,60],'Walnüsse':[10,60],'Cashewkerne':[10,60]};
@@ -1402,6 +1411,8 @@ function solveMyday(sel, K, P){
   const pool = mydayAllFoods().filter(f=>sel[f.n]);
   const info = pool.map(f=>mydayFoodInfo(f, micros));
   const g = new Array(pool.length).fill(0);
+  /* must-have foods (sel===2) are guaranteed in the plan */
+  for(let i=0;i<pool.length;i++) if(sel[pool[i].n]===2) g[i]=info[i].min;
   const totals = ()=>{ const T={k:0,p:0,f:0,c:0,mi:new Array(nM).fill(0)};
     for(let i=0;i<g.length;i++){ if(!g[i]) continue; const v=info[i].v;
       T.k+=g[i]*v.k; T.p+=g[i]*v.p; T.f+=g[i]*v.f; T.c+=g[i]*v.c;
@@ -1414,23 +1425,26 @@ function solveMyday(sel, K, P){
     const dp=Math.max(0,P-t.p), df=Math.max(0,Fmin-t.f);
     const dm=micros.map((m,j)=>Math.max(0,rda[m.key]-t.mi[j]));
     const anyNutr = dp>2 || df>1 || dm.some((d,j)=>d>0.05*rda[micros[j].key]);
-    let bi=-1, bs=-1;
+    let bi=-1, bs=-1, ki=-1, ks=-1;
     for(let i=0;i<pool.length;i++){
       const head=info[i].max-g[i]; if(head<8) continue;
       const v=info[i].v;
-      let s;
+      /* kcal-fill score (staples preferred, stick to foods already in use) */
+      let sk = pool[i].cat==='carbs'?0.5 : pool[i].cat==='protein'?0.35 : pool[i].cat==='fat'?0.25 : 0.08;
+      if(g[i]>0) sk*=1.5;
+      if(sk>ks){ ks=sk; ki=i; }
       if(anyNutr){
-        let u=0.02;
+        /* nutrient score: ONLY real deficit contribution counts (no free base) */
+        let u=0;
         if(dp>2) u += 5*(v.p*100)/P;
         if(df>1) u += 2*(v.f*100)/Fmin;
         for(let j=0;j<nM;j++) if(dm[j]>0.05*rda[micros[j].key]) u += 1.2*Math.min((v.mi[j]*100)/rda[micros[j].key],3);
-        s = u/Math.max(v.k,0.005);
-      }else{
-        s = pool[i].cat==='carbs'?0.5 : pool[i].cat==='protein'?0.35 : pool[i].cat==='fat'?0.25 : 0.1;
+        if(u<0.05) continue;   /* contributes nothing to open deficits -> not eligible here */
+        const s = (u/Math.max(v.k,0.005)) * (g[i]>0?1.35:1);
+        if(s>bs){ bs=s; bi=i; }
       }
-      if(g[i]>0) s*=1.35;
-      if(s>bs){ bs=s; bi=i; }
     }
+    if(bi<0) bi=ki;            /* nothing helps the deficits -> fill calories with best staple */
     if(bi<0) break;
     const chunk = (pool[bi].cat==='fat'||pool[bi].cat==='basics')?10:50;
     g[bi] += Math.min(chunk, info[bi].max-g[bi], Math.max(10, remK/Math.max(info[bi].v.k,0.005)));
@@ -1570,13 +1584,13 @@ function renderFood(){
       <div class="fld" style="flex:1;margin:0"><label>${esc(t('myday_kcal'))}</label><input type="number" inputmode="numeric" value="${md.kcal}" onfocus="this.select()" onchange="S.myday.kcal=+this.value||0;S.myday.kcalMan=true;save()"></div>
       <div class="fld" style="flex:1;margin:0"><label>${esc(t('myday_protein'))}</label><input type="number" inputmode="numeric" value="${md.prot}" onfocus="this.select()" onchange="S.myday.prot=+this.value||0;S.myday.protMan=true;save()"></div>
     </div>${(md.kcalMan||md.protMan)? `<button class="btn sec" style="width:100%;margin-top:8px;font-size:12.5px" onclick="S.myday.kcalMan=false;S.myday.protMan=false;save();renderFood()">↻ ${esc(t('myday_sync'))}</button>`:''}</div>`;
-    h += `<h3 style="margin:10px 2px 4px">${esc(t('myday_pick'))}</h3>`;
+    h += `<h3 style="margin:10px 2px 2px">${esc(t('myday_pick'))}</h3><div class="note" style="margin:0 2px 6px">${esc(t('myday_pick_hint'))}</div>`;
     const NN=DATA.nutrition;
     for(const grp of ['macroCats','otherCats']) for(const cat of NN[grp]){
       h += `<div class="card" style="padding:10px 12px"><h3 style="margin:0 0 4px;font-size:13px">${esc(t('fcat_'+cat.key))}</h3><div>`;
       for(const it of cat.items){ if(!it.k) continue;
-        const on=!!md.sel[it.n]; const nEsc=esc(it.n).replace(/'/g,"\\'");
-        h += `<button class="pickchip ${on?'on':''}" onclick="toggleMydaySel('${nEsc}')">${it.ic} ${esc(tc(it.n))}</button>`;
+        const st=md.sel[it.n]||0; const nEsc=esc(it.n).replace(/'/g,"\\'");
+        h += `<button class="pickchip ${st===2?'must':(st?'on':'')}" onclick="toggleMydaySel('${nEsc}')">${st===2?'⭐ ':''}${it.ic} ${esc(tc(it.n))}</button>`;
       }
       h += `</div></div>`;
     }
@@ -1584,9 +1598,20 @@ function renderFood(){
     const R = window._mydayRes;
     if(R===false) h += `<div class="note" style="text-align:center;margin-top:8px">${esc(t('myday_few'))}</div>`;
     else if(R){
-      h += `<h3 id="mydayres" style="margin:16px 2px 4px">${esc(t('myday_result'))}</h3><div class="card" style="padding:8px 12px"><table class="mini"><thead><tr><th></th><th class="num">${esc(t('myday_amount'))}</th><th class="num">${esc(t('kcal'))}</th></tr></thead><tbody>`;
+      h += `<h3 id="mydayres" style="margin:16px 2px 2px">${esc(t('myday_result'))}</h3><div class="note" style="margin:0 2px 6px">${esc(t('myday_rowhint'))}</div><div class="card" style="padding:8px 12px"><table class="mini"><thead><tr><th></th><th class="num">${esc(t('myday_amount'))}</th><th class="num">${esc(t('kcal'))}</th></tr></thead><tbody>`;
       R.foods.forEach((f,i)=>{ if(R.g[i]<=0) return;
-        h += `<tr><td>${f.ic} ${esc(tc(f.n))}</td><td class="num" style="font-weight:650">${fmt(R.g[i])} g</td><td class="num">${fmt(R.g[i]*f.k/100)}</td></tr>`; });
+        const gr=R.g[i];
+        h += `<tr onclick="toggleMydayRow(${i})" style="cursor:pointer"><td>${f.ic} ${esc(tc(f.n))} <span class="note">▾</span></td><td class="num" style="font-weight:650">${fmt(gr)} g</td><td class="num">${fmt(gr*f.k/100)}</td></tr>`;
+        const pr=(DATA.microDB&&DATA.microDB[f.n])||{};
+        const mParts = R.micros.map((m,j)=>{
+          const amt = gr*(pr[MKEY[m.key]]||0)/100;
+          const pct = Math.round(amt/R.rda[m.key]*100);
+          return {m, amt, pct};
+        }).filter(x=>x.pct>=3);
+        let det = `<b>${esc(t('protein'))}</b> ${fmt(gr*f.p/100,1)} g · <b>${esc(t('carbs'))}</b> ${fmt(gr*f.c/100,1)} g · <b>${esc(t('fat'))}</b> ${fmt(gr*f.f/100,1)} g`;
+        if(mParts.length) det += '<br>' + mParts.map(x=>`${x.m.icon} ${esc(t('micro_'+x.m.key))}: ${fmt(x.amt, x.amt<10?1:0)} ${x.m.unit} (<b style="color:${x.pct>=100?'#2e9e5b':'var(--accent)'}">${x.pct} %</b>)`).join(' · ');
+        else det += `<br><span class="note">${esc(t('myday_nomicro'))}</span>`;
+        h += `<tr class="mdetrow" id="mdet${i}" style="display:none"><td colspan="3">${det}</td></tr>`; });
       h += `<tr><td style="font-weight:700">${esc(t('myday_total'))}</td><td class="num" style="font-weight:650">P ${fmt(R.T.p)} · C ${fmt(R.T.c)} · F ${fmt(R.T.f)}</td><td class="num" style="font-weight:700">${fmt(R.T.k)}</td></tr></tbody></table></div>`;
       const bar=(label,pct)=>{ const col = pct>=100?'#2e9e5b':(pct>=70?'var(--accent)':'#d9822b');
         return `<div class="covrow"><span class="cl">${label}</span><div class="cb"><div style="width:${Math.min(100,pct)}%;background:${col}"></div></div><span class="cv" style="color:${col}">${pct>999?'999+':Math.round(pct)} %</span></div>`; };
