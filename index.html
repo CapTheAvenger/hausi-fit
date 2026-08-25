@@ -311,6 +311,7 @@ const CT = {"45° Beinpresse hohe Fußstellung":{"de":"45° Beinpresse hohe Fuß
 const I18N = {
 de:{
   tab_home:"Start",
+  warn_pal_hours:"Die Stunden ergeben nicht 24. Verteile deinen ganzen Tag – auch Arbeit, Weg und Haushalt –, sonst ist der PAL-Wert falsch.",
   train_finish:"Training abgeschlossen",
   train_finished:"Stark. Nächstes Training steht bereit ✓",
   train_finish_note:"Schaltet weiter auf: {d}", tab_train:"Training", tab_calc:"Rechner", tab_meas:"Messungen", tab_food:"Ernährung", tab_more:"Mehr",
@@ -453,6 +454,7 @@ de:{
 },
 en:{
   tab_home:"Home",
+  warn_pal_hours:"The hours do not add up to 24. Spread your whole day across the rows – including work, commute and chores – otherwise the PAL value is wrong.",
   train_finish:"Finish workout",
   train_finished:"Nice. Next session is ready ✓",
   train_finish_note:"Advances to: {d}", tab_train:"Training", tab_calc:"Calculator", tab_meas:"Measurements", tab_food:"Nutrition", tab_more:"More",
@@ -595,6 +597,7 @@ en:{
 },
 es:{
   tab_home:"Inicio",
+  warn_pal_hours:"Las horas no suman 24. Reparte todo tu día – incluidos trabajo, desplazamientos y tareas de casa – o el valor PAL será incorrecto.",
   train_finish:"Entrenamiento terminado",
   train_finished:"Bien. La próxima sesión está lista ✓",
   train_finish_note:"Avanza a: {d}", tab_train:"Entreno", tab_calc:"Calculadora", tab_meas:"Medidas", tab_food:"Nutrición", tab_more:"Más",
@@ -1243,14 +1246,16 @@ function renderCalc(){
       <div class="note" style="margin-top:8px">${esc(t('bf_help_note'))}</div>
     </div></details>
   </div>
-  <details class="acc"><summary>${esc(t('pal_title'))} <span class="note" style="font-weight:400">PAL ${fmt(R.pal,2)}</span></summary><div class="accbody">`;
+  <details class="acc"><summary>${esc(t('pal_title'))} <span class="note" style="font-weight:400">PAL ${fmt(R.pal,2)}${R.palLow?' ⚠️':''}</span></summary><div class="accbody">`;
   PAL_ROWS.forEach((row,i)=>{
     h += `<div class="sldrow"><label>${esc(t(row.k))} <span class="note">(${row.v})</span></label>
       <input type="range" min="0" max="16" step="0.5" value="${c.palH[i]}" oninput="document.getElementById('paln${i}').value=this.value" onchange="setPalH(${i},this.value)">
       <div class="numwrap sldnum"><input type="number" id="paln${i}" inputmode="decimal" min="0" max="24" step="0.5" value="${c.palH[i]}" onchange="setPalH(${i},this.value)"><span class="numunit">h</span></div></div>`;
   });
   h += `<div class="statline"><span class="sl">${esc(t('pal_sum'))}</span><span class="sv" style="color:${Math.abs(R.hours-24)<0.01?'var(--good)':'var(--bad)'}">${fmt(R.hours,1)} / 24 h</span></div>
-  <div class="statline"><span class="sl">${esc(t('pal_val'))}</span><span class="sv">${fmt(R.pal,2)}</span></div>
+  <div class="statline"><span class="sl">${esc(t('pal_val'))}</span><span class="sv">${R.palLow? `<span style="color:var(--muted);text-decoration:line-through">${fmt(R.palRaw,2)}</span> → <span style="color:var(--bad)">${fmt(R.pal,2)}</span>` : fmt(R.pal,2)}</span></div>
+  ${R.palLow? `<div class="note" style="color:var(--bad);margin-top:6px">⚠️ ${esc(t('warn_pal_low').replace('{pal}',fmt(R.palRaw,2)))}</div>`:''}
+  ${Math.abs(R.hours-24)>=0.01? `<div class="note" style="color:var(--bad);margin-top:6px">⚠️ ${esc(t('warn_pal_hours'))}</div>`:''}
   </div></details>
   <details class="acc"><summary>${esc(t('jog_title'))} <span class="note" style="font-weight:400">+${fmt(R.jogWeek)} ${t('kcal')}/7d</span></summary><div class="accbody">
     <div class="rowflex">${inp('jogS',t('jog_per_week'),c.jogS)}${inp('jogK',t('jog_kcal'),c.jogK,50)}</div>
