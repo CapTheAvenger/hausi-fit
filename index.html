@@ -311,6 +311,48 @@ const CT = {"45° Beinpresse hohe Fußstellung":{"de":"45° Beinpresse hohe Fuß
 const I18N = {
 de:{
   tab_home:"Start",
+  hours_bias:"Diese Methode fällt meist 0,10–0,15 niedriger aus als der Ganztages-Faktor, weil der Schlaf mit 0,95 ein Drittel des Tages nach unten zieht. Referenz für deinen Kurs ist der Faktor – nutze das Stundenraster nur als Gegenprobe.",
+  act_title:"Aktivität",
+  act_simple:"Faktor wählen",
+  act_hours:"Stunden verteilen",
+  af_intro:"Wähle die Zeile, die deinen normalen Tag beschreibt. Krafttraining ist hier schon eingerechnet – trag es nicht zusätzlich ein.",
+  af_12:"Nur sitzen oder liegen",
+  af_12_ex:"Alte, gebrechliche oder kranke Menschen",
+  af_14:"Fast ausschließlich sitzend, wenig Freizeitaktivität",
+  af_14_ex:"Schreibtischtätigkeit mit unter 5.000 Schritten pro Tag",
+  af_16:"Überwiegend sitzend, mit stehenden/gehenden Tätigkeiten",
+  af_16_ex:"Kraftfahrer, Laborant – oder sitzende Tätigkeit mit über 5.000 Schritten pro Tag",
+  af_18:"Überwiegend stehende/gehende Tätigkeiten",
+  af_18_ex:"Verkauf, Gastro, Handwerk, Lager – oder sitzende Tätigkeit mit 2–4 Einheiten Krafttraining pro Woche und über 5.000 Schritten pro Tag",
+  af_20:"Körperlich anstrengende Tätigkeiten",
+  af_20_ex:"Bergleute, Landwirte, Waldarbeiter, Leistungssportler",
+  af_fine:"Feinjustierung",
+  af_used:"Verwendeter Faktor",
+  af_note:"Faktoren nach Schofield/James (1990) – dieselbe Tabelle, mit der dein Kurs in „Schritt 1: Bestimme deine Kalorien\" arbeitet. Erhaltungskalorien = Grundumsatz × Faktor.",
+  bmrf_tenhaaf:"Ten-Haaf (Kurs)",
+  bmr_spread:"Spanne über alle vier Formeln: {lo}–{hi} kcal. Genau deshalb sind 14 Tage Praxistest mehr wert als die Formelwahl.",
+  goal_ideal:"Orientierung des Kurses: Größe minus 100 = {w} kg.",
+  goal_use:"übernehmen",
+  def_hold:"Erhaltung",
+  def_mod:"moderat (−20 %)",
+  def_aggr:"aggressiv (−30 %)",
+  warn_def_high:"Über 25 % Defizit ist die aggressive Variante. Länger als ein paar Wochen kostet das spürbar Muskelmasse und Trainingsleistung.",
+  prot_ref:"Bezugsgewicht",
+  prot_ref_goal:"Zielgewicht",
+  prot_ref_cur:"aktuell",
+  prot_ref_note:"Gerechnet mit {w} kg → {p} g Protein. Bei deutlichem Übergewicht empfiehlt der Kurs das Zielgewicht als Bezug, sonst wird die Menge unnötig hoch (Fettmasse braucht kein Protein).",
+  fat_mode:"Fett festlegen über",
+  fat_mode_pct:"% der Kalorien",
+  fat_mode_gkg:"g pro kg",
+  fat_pct:"Fett-Anteil",
+  fat_min_note:"Untergrenze: {min} g. Das ist Körpergröße ÷ 3 nach deinem Kurs, mindestens aber 0,6 g pro kg Körpergewicht – darunter leidet der Hormonhaushalt.",
+  adjust_title:"Nach 14 Tagen anpassen",
+  adjust_intro:"Kein Rechner trifft es auf Anhieb. Die Zahl oben ist ein Startwert, den die Praxis bestätigen muss – so geht dein Kurs vor:",
+  adjust_1:"14 Tage konsequent so essen. Nicht früher senken – zu frühes Kürzen ist einer der häufigsten Fehler.",
+  adjust_2:"Stagniert alles außer dem Training, erst die eigenen Fehler suchen (Abwiegen, Schlaf, Alltagsbewegung). Dann die Kalorien um 5 % senken → {k} kcal, und weitere 14 Tage testen.",
+  adjust_3:"Alternative statt weniger essen: 2.000 Schritte pro Tag drauflegen und 7 Tage beobachten.",
+  adjust_note:"Maßstab ist nicht das Tagesgewicht, sondern das gleitende Gewicht plus Umfänge, Trainingsleistung und Fotos.",
+  plan_kcalfactors:"Gerechnet wird mit den EU-Kennzeichnungswerten 4 / 4 / 9 kcal je g (Protein / Kohlenhydrate / Fett), weil die Nährwerte in der Lebensmittel-Datenbank so ausgewiesen sind. Dein Kurs rechnet mit 4,1 / 4,1 / 9,3 – das ergibt rund 2 % Unterschied.",
   pal_ref_title:"Womit ist mein Wert vergleichbar?",
   palr_desk:"Nur sitzende Tätigkeit, wenig Freizeitaktivität (Büro)",
   palr_mixed:"Sitzend, zeitweise gehend/stehend (Labor, Fließband, Studium)",
@@ -336,7 +378,7 @@ de:{
   loss_pct_week:"Abnahme/Woche (% KG)",
   warn_def_cap:"Defizit auf 25 % begrenzt. Größere Defizite kosten überproportional Muskelmasse und sind selten durchhaltbar.",
   warn_under_bmr:"Deine Zufuhr liegt unter dem Grundumsatz ({bmr} kcal). Auf Dauer nicht sinnvoll – Defizit verkleinern oder Aktivität erhöhen.",
-  warn_pal_low:"Dein PAL ist {pal} und damit unter 1,40 – der Untergrenze für frei lebende Erwachsene (FAO/WHO/UNU). Gerechnet wird mit 1,40. Prüfe deine Stunden.",
+  warn_pal_low:"Dein Wert ist {pal} und damit unter 1,20 – das entspricht „nur sitzen oder liegen\". Gerechnet wird mit 1,20. Prüfe deine Eingaben.",
   warn_rate:"Aktuell {pct} % Körpergewicht pro Woche. Zielband: 0,5–1,0 %/Woche – darunter dauert es unnötig lange, darüber verlierst du vermehrt Muskelmasse.",
   bmr_formula:"Grundumsatz-Formel",
   bmrf_mifflin:"Mifflin-St Jeor",
@@ -472,6 +514,48 @@ de:{
 },
 en:{
   tab_home:"Home",
+  hours_bias:"This method usually lands 0.10–0.15 lower than the whole-day factor, because sleep at 0.95 drags a third of the day down. Your course uses the factor as its reference – treat the hour grid as a cross-check.",
+  act_title:"Activity",
+  act_simple:"Pick a factor",
+  act_hours:"Allocate hours",
+  af_intro:"Pick the row that describes your normal day. Strength training is already included – do not add it again.",
+  af_12:"Sitting or lying only",
+  af_12_ex:"Elderly, frail or ill people",
+  af_14:"Almost entirely seated, little leisure activity",
+  af_14_ex:"Desk job with fewer than 5,000 steps a day",
+  af_16:"Mostly seated, with standing/walking tasks",
+  af_16_ex:"Driver, lab technician – or a desk job with more than 5,000 steps a day",
+  af_18:"Mostly standing/walking work",
+  af_18_ex:"Retail, hospitality, trades, warehouse – or a desk job with 2–4 strength sessions a week and more than 5,000 steps a day",
+  af_20:"Physically demanding work",
+  af_20_ex:"Miners, farmers, forestry workers, competitive athletes",
+  af_fine:"Fine tuning",
+  af_used:"Factor used",
+  af_note:"Factors per Schofield/James (1990) – the same table your course uses in \"Step 1: determine your calories\". Maintenance calories = BMR × factor.",
+  bmrf_tenhaaf:"Ten-Haaf (course)",
+  bmr_spread:"Spread across all four equations: {lo}–{hi} kcal. Which is exactly why 14 days of real-world testing beats the choice of formula.",
+  goal_ideal:"Course rule of thumb: height minus 100 = {w} kg.",
+  goal_use:"use this",
+  def_hold:"Maintenance",
+  def_mod:"moderate (−20 %)",
+  def_aggr:"aggressive (−30 %)",
+  warn_def_high:"Above 25 % is the aggressive option. Beyond a few weeks it costs noticeable muscle mass and training performance.",
+  prot_ref:"Reference weight",
+  prot_ref_goal:"goal weight",
+  prot_ref_cur:"current",
+  prot_ref_note:"Calculated with {w} kg → {p} g protein. With substantial excess weight the course recommends using goal weight, otherwise the amount gets needlessly high (fat mass needs no protein).",
+  fat_mode:"Set fat via",
+  fat_mode_pct:"% of calories",
+  fat_mode_gkg:"g per kg",
+  fat_pct:"Fat share",
+  fat_min_note:"Lower limit: {min} g. That is height ÷ 3 per your course, but at least 0.6 g per kg of body weight – below that, hormones suffer.",
+  adjust_title:"Adjust after 14 days",
+  adjust_intro:"No calculator gets it right first time. The number above is a starting point that practice has to confirm – this is how your course proceeds:",
+  adjust_1:"Eat this way consistently for 14 days. Do not cut earlier – cutting too soon is one of the most common mistakes.",
+  adjust_2:"If everything but training stalls, look for your own errors first (weighing, sleep, daily movement). Then lower calories by 5 % → {k} kcal, and test another 14 days.",
+  adjust_3:"Alternative to eating less: add 2,000 steps a day and watch for 7 days.",
+  adjust_note:"The yardstick is not daily weight but trend weight plus measurements, training performance and photos.",
+  plan_kcalfactors:"Calculated with the EU labelling values 4 / 4 / 9 kcal per g (protein / carbs / fat), because the food database reports nutrients that way. Your course uses 4.1 / 4.1 / 9.3 – about a 2 % difference.",
   pal_ref_title:"What is my value comparable to?",
   palr_desk:"Purely seated work, little leisure activity (office)",
   palr_mixed:"Seated, occasionally walking/standing (lab, assembly line, student)",
@@ -497,7 +581,7 @@ en:{
   loss_pct_week:"Loss/week (% BW)",
   warn_def_cap:"Deficit capped at 25 %. Larger deficits cost disproportionate muscle mass and are rarely sustainable.",
   warn_under_bmr:"Your intake is below your BMR ({bmr} kcal). Not advisable long term – reduce the deficit or increase activity.",
-  warn_pal_low:"Your PAL is {pal}, below 1.40 – the lower bound for free-living adults (FAO/WHO/UNU). Calculations use 1.40. Check your hours.",
+  warn_pal_low:"Your value is {pal}, below 1.20 – that corresponds to \"sitting or lying only\". Calculations use 1.20. Check your entries.",
   warn_rate:"Currently {pct} % of body weight per week. Target range: 0.5–1.0 %/week – below that it takes needlessly long, above it you lose more muscle.",
   bmr_formula:"BMR formula",
   bmrf_mifflin:"Mifflin-St Jeor",
@@ -633,6 +717,48 @@ en:{
 },
 es:{
   tab_home:"Inicio",
+  hours_bias:"Este método suele salir 0,10–0,15 más bajo que el factor de día completo, porque el sueño con 0,95 arrastra un tercio del día. La referencia de tu curso es el factor: usa la rejilla de horas solo como comprobación.",
+  act_title:"Actividad",
+  act_simple:"Elegir factor",
+  act_hours:"Repartir horas",
+  af_intro:"Elige la fila que describe tu día normal. El entrenamiento de fuerza ya está incluido: no lo añadas otra vez.",
+  af_12:"Solo sentado o tumbado",
+  af_12_ex:"Personas mayores, frágiles o enfermas",
+  af_14:"Casi siempre sentado, poca actividad de ocio",
+  af_14_ex:"Trabajo de oficina con menos de 5.000 pasos al día",
+  af_16:"Mayormente sentado, con tareas de pie o caminando",
+  af_16_ex:"Conductor, técnico de laboratorio – o trabajo de oficina con más de 5.000 pasos al día",
+  af_18:"Trabajo mayormente de pie o caminando",
+  af_18_ex:"Comercio, hostelería, oficios, almacén – o trabajo de oficina con 2–4 sesiones de fuerza por semana y más de 5.000 pasos al día",
+  af_20:"Trabajo físicamente exigente",
+  af_20_ex:"Mineros, agricultores, trabajadores forestales, deportistas de competición",
+  af_fine:"Ajuste fino",
+  af_used:"Factor utilizado",
+  af_note:"Factores según Schofield/James (1990): la misma tabla que usa tu curso en «Paso 1: determina tus calorías». Calorías de mantenimiento = metabolismo basal × factor.",
+  bmrf_tenhaaf:"Ten-Haaf (curso)",
+  bmr_spread:"Diferencia entre las cuatro ecuaciones: {lo}–{hi} kcal. Justo por eso 14 días de prueba real valen más que la elección de fórmula.",
+  goal_ideal:"Regla del curso: altura menos 100 = {w} kg.",
+  goal_use:"usar",
+  def_hold:"Mantenimiento",
+  def_mod:"moderado (−20 %)",
+  def_aggr:"agresivo (−30 %)",
+  warn_def_high:"Por encima del 25 % es la variante agresiva. Más allá de unas semanas cuesta masa muscular y rendimiento notables.",
+  prot_ref:"Peso de referencia",
+  prot_ref_goal:"peso objetivo",
+  prot_ref_cur:"actual",
+  prot_ref_note:"Calculado con {w} kg → {p} g de proteína. Con bastante sobrepeso el curso recomienda usar el peso objetivo; si no, la cantidad sale innecesariamente alta (la grasa no necesita proteína).",
+  fat_mode:"Definir la grasa por",
+  fat_mode_pct:"% de calorías",
+  fat_mode_gkg:"g por kg",
+  fat_pct:"Proporción de grasa",
+  fat_min_note:"Límite inferior: {min} g. Es altura ÷ 3 según tu curso, pero como mínimo 0,6 g por kg de peso corporal; por debajo se resiente el sistema hormonal.",
+  adjust_title:"Ajustar a los 14 días",
+  adjust_intro:"Ninguna calculadora acierta a la primera. El número de arriba es un punto de partida que la práctica debe confirmar; así procede tu curso:",
+  adjust_1:"Come así de forma constante durante 14 días. No recortes antes: recortar demasiado pronto es uno de los errores más frecuentes.",
+  adjust_2:"Si todo se estanca salvo el entrenamiento, busca primero tus propios fallos (pesar, sueño, movimiento diario). Luego baja las calorías un 5 % → {k} kcal y prueba otros 14 días.",
+  adjust_3:"Alternativa a comer menos: añade 2.000 pasos al día y observa durante 7 días.",
+  adjust_note:"La referencia no es el peso diario, sino el peso suavizado más las medidas, el rendimiento y las fotos.",
+  plan_kcalfactors:"Se calcula con los valores de etiquetado de la UE: 4 / 4 / 9 kcal por g (proteína / carbohidratos / grasa), porque así figuran los nutrientes en la base de datos de alimentos. Tu curso usa 4,1 / 4,1 / 9,3, una diferencia de aproximadamente el 2 %.",
   pal_ref_title:"¿Con qué es comparable mi valor?",
   palr_desk:"Trabajo solo sentado, poca actividad de ocio (oficina)",
   palr_mixed:"Sentado, a veces de pie/caminando (laboratorio, cadena de montaje, estudiante)",
@@ -658,7 +784,7 @@ es:{
   loss_pct_week:"Pérdida/semana (% peso)",
   warn_def_cap:"Déficit limitado al 25 %. Déficits mayores cuestan masa muscular de forma desproporcionada y rara vez son sostenibles.",
   warn_under_bmr:"Tu ingesta está por debajo del metabolismo basal ({bmr} kcal). No es aconsejable a largo plazo: reduce el déficit o aumenta la actividad.",
-  warn_pal_low:"Tu PAL es {pal}, por debajo de 1,40, el límite inferior para adultos que viven libremente (FAO/OMS/UNU). Se calcula con 1,40. Revisa tus horas.",
+  warn_pal_low:"Tu valor es {pal}, por debajo de 1,20, lo que corresponde a «solo sentado o tumbado». Se calcula con 1,20. Revisa tus datos.",
   warn_rate:"Actualmente {pct} % del peso corporal por semana. Rango objetivo: 0,5–1,0 %/semana; por debajo tarda innecesariamente, por encima pierdes más músculo.",
   bmr_formula:"Fórmula del metabolismo basal",
   bmrf_mifflin:"Mifflin-St Jeor",
@@ -814,7 +940,8 @@ function defaultState(){
     microAmt:{}, cart:{}, myday:{sel:{}, kcal:0, minAmt:{}, maxAmt:{}, warm:2}, calcSaved:null,
     foodTab:'top', recipeCat:'all', zSort:'name', zQuery:'',
     calc:{gender:'m', height:180, age:39, weight:92.6, goal:86, deficit:20, bf:30,
-          palH:[8,2,2,8,3,1], jogS:3, jogK:600, macroMode:'auto', ppk:2, fpk:1, mp:30, mf:30, mc:40, meals:4, bmrF:'mifflin'},
+          palH:[8,2,8,4,2,0], jogS:0, jogK:600, macroMode:'auto', ppk:2.2, fpk:1, mp:30, mf:30, mc:40, meals:4,
+          bmrF:'tenhaaf', afMode:'af', af:1.65, pRef:'goal', fatMode:'pct', fatPct:25},
   };
 }
 function save(){
@@ -1184,10 +1311,22 @@ function newEx(splitId, dayIdx, slotIdx, pattern){
 }
 
 /* ================= Calculator ================= */
+/* Stundenraster: Faktoren der gaengigen deutschen PAL-Tabelle (Mittelwert der Spannen).
+   Zweitmethode — der Kurs arbeitet mit EINEM Ganztages-Faktor, siehe AF_ROWS. */
 const PAL_ROWS = [
-  {k:'pal_sleep', v:1.0}, {k:'pal_lying', v:1.2}, {k:'pal_sitting', v:1.5},
-  {k:'pal_sitstand', v:1.8}, {k:'pal_standing', v:2.3}, {k:'pal_hard', v:3.5},
+  {k:'pal_sleep', v:0.95}, {k:'pal_lying', v:1.25}, {k:'pal_sitting', v:1.45},
+  {k:'pal_sitstand', v:1.65}, {k:'pal_standing', v:1.85}, {k:'pal_hard', v:2.1},
 ];
+/* Aktivitaetsfaktor als Ganztages-Wert (Schofield/James 1990, so auch im Kurs
+   "Schritt 1: Bestimme deine Kalorien"). Krafttraining ist hier BEREITS enthalten. */
+const AF_ROWS = [
+  {k:'af_12', v:1.2,  lo:1.2, hi:1.2},
+  {k:'af_14', v:1.45, lo:1.4, hi:1.5},
+  {k:'af_16', v:1.65, lo:1.6, hi:1.7},
+  {k:'af_18', v:1.85, lo:1.8, hi:1.9},
+  {k:'af_20', v:2.2,  lo:2.0, hi:2.4},
+];
+function afRowFor(v){ return AF_ROWS.find(r=>v>=r.lo-0.001 && v<=r.hi+0.001) || AF_ROWS[2]; }
 /* PAR-Werte nach FAO/WHO/UNU 2004 (Human Energy Requirements, Tab. 5.2).
    Die Summe ergibt den PAL; Nahrungsthermogenese ist darin bereits enthalten. */
 const PAL_REF = [
@@ -1196,9 +1335,9 @@ const PAL_REF = [
   {k:'palr_stand', t:'1,8–1,9', lo:1.75, hi:1.95},
   {k:'palr_hard',  t:'2,0–2,4', lo:1.95, hi:99},
 ];
-const PAL_FLOOR = 1.40;   // FAO/WHO/UNU: Untergrenze fuer frei lebende Erwachsene
+const PAL_FLOOR = 1.20;   // untere Tabellengrenze (nur sitzen/liegen) — faengt Tippfehler ab
 const KCAL_PER_KG = 7700; // Energiegehalt Koerperfett (Wishnofsky), inkl. Anpassungsverlusten
-const BMR_FORMULAS = ['mifflin','harris','katch'];
+const BMR_FORMULAS = ['tenhaaf','mifflin','harris','katch'];
 const REFEED = [
   {bf:'>30', m:'1', f:'1', lo:30, hi:200},
   {bf:'25–30', m:'1', f:'1–2', lo:25, hi:30},
@@ -1210,6 +1349,8 @@ const REFEED = [
 ];
 function bmrFor(formula, c){
   const w=+c.weight, hgt=+c.height, a=+c.age, m=c.gender==='m';
+  /* Ten-Haaf — die Formel aus dem Kurs (O'Neill et al. 2023, Meta-Analyse an Sportlern) */
+  if(formula==='tenhaaf') return 11.936*w + 587.728*(hgt/100) - 8.129*a + (m?220.827:29.79);
   if(formula==='harris') return m ? 66.5+13.7*w+5*hgt-6.8*a : 655+9.6*w+1.8*hgt-4.7*a;
   if(formula==='katch'){ const lbm = w*(1-(+c.bf||0)/100); return 370+21.6*lbm; }
   return m ? 10*w+6.25*hgt-5*a+5 : 10*w+6.25*hgt-5*a-161;   // Mifflin-St Jeor
@@ -1221,15 +1362,19 @@ function calcAll(){
   const bmr = bmrFor(formula, c);
   const bmrAlt = BMR_FORMULAS.filter(f=>f!==formula).map(f=>({f, v:bmrFor(f,c)}));
   const hours = c.palH.reduce((x,y)=>x+(+y||0),0);
-  const palRaw = hours>0 ? c.palH.reduce((acc,hh,i)=>acc+(+hh||0)*PAL_ROWS[i].v,0)/hours : PAL_FLOOR;
+  const palHours = hours>0 ? c.palH.reduce((acc,hh,i)=>acc+(+hh||0)*PAL_ROWS[i].v,0)/hours : PAL_FLOOR;
+  const afMode = c.afMode==='hours' ? 'hours' : 'af';       // 'af' = Kursmethode (ein Ganztages-Faktor)
+  const afPick = Math.max(1.2, Math.min(2.4, +c.af||1.65));
+  const palRaw = afMode==='af' ? afPick : palHours;
   const palLow = palRaw < PAL_FLOOR;
   const pal = Math.max(PAL_FLOOR, palRaw);
   const tdee = bmr*pal;
   const goalMaint = bmrFor(formula, {...c, weight:goal})*pal;  // Bedarf beim Zielgewicht (nur Info)
   const jogDay = ((+c.jogS||0)*(+c.jogK||0))/7;   // zusaetzliches Cardio als Tagesdurchschnitt
   const maint = tdee + jogDay;              // Erhaltungsbedarf = heutiger Verbrauch inkl. Cardio
-  const defPct = Math.max(0, Math.min(25, +c.deficit||0));
-  const defCapped = (+c.deficit||0) > 25;
+  const defPct = Math.max(0, Math.min(30, +c.deficit||0));
+  const defCapped = (+c.deficit||0) > 30;
+  const defHigh = defPct > 25;
   const intake = maint*(1-defPct/100);
   const defDay = maint-intake;
   const jogWeek = (+c.jogS||0)*(+c.jogK||0);
@@ -1238,13 +1383,15 @@ function calcAll(){
   const lossWeek = weekDef/KCAL_PER_KG;
   const toLose = Math.max(0, w-goal);
   return {bmr, bmrF:formula, bmrAlt, hours, pal, palRaw, palLow, tdee, goalMaint, maint,
-    intake, defPct, defCapped, defDay, weekDef, lossWeek,
+    intake, defPct, defCapped, defHigh, defDay, weekDef, lossWeek,
     lossPctWeek: w>0 ? lossWeek/w*100 : 0,
     weeksToGoal: (toLose>0 && lossWeek>0.01) ? toLose/lossWeek : 0, toLose,
     underBmr: intake < bmr, weekKcal:intake*7, jogWeek, jogDay, sportH,
     cardioDouble: sportH>0 && jogWeek>0,
     palClass: pal<1.70?'low':(pal<2.00?'mid':(pal<2.40?'high':'vhigh')),
-    fatMin: Math.max(Math.round(0.6*w), Math.round(0.20*maint*(1-defPct/100)/9)),
+    afMode, afPick, palHours, idealW: Math.max(40, Math.round(+c.height-100)),
+    /* Fett-Minimum: Kursregel Groesse/3, mindestens aber der physiologische Boden 0,6 g/kg */
+    fatMin: Math.max(Math.round(+c.height/3), Math.round(0.6*w)),
     carbMin: 130};
 }
 /* Energiefaktoren nach EU-LMIV (VO 1169/2011, Anhang XIV):
@@ -1253,7 +1400,13 @@ const KCAL_P=4, KCAL_C=4, KCAL_F=9, KCAL_FIB=2, KCAL_ALC=7;
 function macroCalc(kcal){
   const c=S.calc, w=+c.weight;
   if(c.macroMode==='auto'){
-    const pg = c.ppk*w, fg = c.fpk*w;
+    /* Kurs Schritt 2: bei Uebergewicht am ZIELGEWICHT orientieren, nicht am aktuellen Gewicht */
+    const pw = (c.pRef==='current') ? w : Math.min(w, +c.goal||w);
+    const pg = c.ppk*pw;
+    /* Kurs Schritt 3: Fett als 25-35 % der Kalorien, Minimum Groesse/3 */
+    const fMin = Math.max(Math.round(+c.height/3), Math.round(0.6*w));
+    const fg = (c.fatMode==='gkg') ? c.fpk*w
+             : Math.max(fMin, (kcal*(Math.max(15,Math.min(45,+c.fatPct||25))/100))/KCAL_F);
     const pk = pg*KCAL_P, fk = fg*KCAL_F;
     const cg = Math.max(0,(kcal-pk-fk)/KCAL_C);
     return {p:pg,f:fg,c:cg,pk,fk,ck:cg*KCAL_C};
@@ -1335,7 +1488,12 @@ function renderCalc(){
       ${inp('age',t('age'),c.age)}
     </div>
     <div class="rowflex" style="margin-bottom:10px">${inp('height',t('height'),c.height)}${inp('weight',t('cur_weight'),c.weight,0.1)}</div>
-    <div class="rowflex" style="margin-bottom:10px">${inp('goal',t('goal_weight'),c.goal,0.1)}<div class="fld"><label for="cf_deficit">${esc(t('deficit'))}</label><input id="cf_deficit" type="number" inputmode="decimal" step="1" min="0" max="25" value="${c.deficit}" onchange="S.calc.deficit=Math.max(0,Math.min(25,+this.value||0));save();calcSoon()"></div></div>
+    <div class="rowflex" style="margin-bottom:6px">${inp('goal',t('goal_weight'),c.goal,0.1)}<div class="fld"><label for="cf_deficit">${esc(t('deficit'))}</label><input id="cf_deficit" type="number" inputmode="decimal" step="1" min="0" max="30" value="${c.deficit}" onchange="S.calc.deficit=Math.max(0,Math.min(30,+this.value||0));save();calcSoon()"></div></div>
+    <div class="note" style="margin:0 0 6px">${esc(t('goal_ideal').replace('{w}',fmt(R.idealW)))} <a href="#" onclick="event.preventDefault();S.calc.goal=${R.idealW};save();renderCalc()" style="color:var(--accent)">${esc(t('goal_use'))}</a></div>
+    <div class="seg" style="margin-bottom:10px">
+      ${[[0,'def_hold'],[20,'def_mod'],[30,'def_aggr']].map(([v,k])=>
+        `<button class="${R.defPct===v?'on':''}" onclick="S.calc.deficit=${v};save();renderCalc()">${esc(t(k))}</button>`).join('')}
+    </div>
     <div class="rowflex">${inp('bf',t('bodyfat'),c.bf)}</div>
     <details class="acc" data-acc="calc-bf" style="margin:10px 0 0"><summary><span>${esc(t('bf_help'))}</span></summary><div class="accbody">
       <div class="seg" style="margin-bottom:10px">
@@ -1346,7 +1504,32 @@ function renderCalc(){
       <div class="note" style="margin-top:8px">${esc(t('bf_help_note'))}</div>
     </div></details>
   </div>
-  <details class="acc" data-acc="calc-pal"><summary>${esc(t('pal_title'))} <span class="note" style="font-weight:400">PAL ${fmt(R.pal,2)}${R.palLow?' ⚠️':''}</span></summary><div class="accbody">`;
+  <details class="acc" data-acc="calc-pal"><summary>${esc(t('act_title'))} <span class="note" style="font-weight:400">${R.afMode==='af'?'AF':'PAL'} ${fmt(R.pal,2)}${R.palLow?' ⚠️':''}</span></summary><div class="accbody">
+    <div class="seg" style="margin-bottom:10px">
+      <button class="${R.afMode==='af'?'on':''}" onclick="S.calc.afMode='af';save();renderCalc()">${esc(t('act_simple'))}</button>
+      <button class="${R.afMode==='hours'?'on':''}" onclick="S.calc.afMode='hours';save();renderCalc()">${esc(t('act_hours'))}</button>
+    </div>`;
+  if(R.afMode==='af'){
+    const cur = afRowFor(R.afPick);
+    h += `<div class="note" style="margin:0 0 10px">${esc(t('af_intro'))}</div>`;
+    AF_ROWS.forEach(r=>{
+      const on = r===cur;
+      h += `<div class="card" style="margin:0 0 8px;padding:10px 12px;cursor:pointer;${on?'border-color:var(--accent)':''}" onclick="S.calc.af=${r.v};save();renderCalc()">
+        <div style="display:flex;gap:10px;align-items:baseline">
+          <div style="font-weight:700;font-variant-numeric:tabular-nums;min-width:62px;color:${on?'var(--accent)':'inherit'}">${r.lo===r.hi?fmt(r.lo,1):fmt(r.lo,1)+'–'+fmt(r.hi,1)}</div>
+          <div style="flex:1;min-width:0"><div style="font-weight:${on?'650':'500'}">${esc(t(r.k))}</div>
+          <div class="note">${esc(t(r.k+'_ex'))}</div></div>
+          <div style="font-size:18px">${on?'✓':''}</div>
+        </div></div>`;
+    });
+    if(cur.lo!==cur.hi){
+      h += `<div class="sldrow" style="margin-top:10px"><label>${esc(t('af_fine'))}</label>
+        <input type="range" tabindex="-1" min="${cur.lo}" max="${cur.hi}" step="0.05" value="${R.afPick}" oninput="document.getElementById('afn').value=this.value" onchange="setCalcNum('af',this.value)">
+        <div class="numwrap sldnum"><input type="number" id="afn" inputmode="decimal" min="${cur.lo}" max="${cur.hi}" step="0.05" value="${fmt(R.afPick,2)}" onchange="setCalcNum('af',this.value)"></div></div>`;
+    }
+    h += `<div class="statline" style="margin-top:8px"><span class="sl">${esc(t('af_used'))}</span><span class="sv">${fmt(R.afPick,2)}</span></div>
+      <div class="note" style="margin-top:8px">${esc(t('af_note'))}</div>`;
+  } else {
   PAL_ROWS.forEach((row,i)=>{
     h += `<div class="sldrow"><label>${esc(t(row.k))} <span class="note">(${row.v})</span></label>
       <input type="range" tabindex="-1" min="0" max="16" step="0.5" value="${c.palH[i]}" oninput="document.getElementById('paln${i}').value=this.value" onchange="setPalH(${i},this.value)">
@@ -1354,14 +1537,16 @@ function renderCalc(){
   });
   h += `<div class="statline"><span class="sl">${esc(t('pal_sum'))}</span><span class="sv" style="color:${Math.abs(R.hours-24)<0.01?'var(--good)':'var(--bad)'}">${fmt(R.hours,1)} / 24 h</span></div>
   <div class="statline"><span class="sl">${esc(t('pal_val'))}</span><span class="sv">${R.palLow? `<span style="color:var(--muted);text-decoration:line-through">${fmt(R.palRaw,2)}</span> → <span style="color:var(--bad)">${fmt(R.pal,2)}</span>` : fmt(R.pal,2)}</span></div>
+  ${Math.abs(R.hours-24)>=0.01? `<div class="note" style="color:var(--bad);margin-top:6px">⚠️ ${esc(t('warn_pal_hours'))}</div>`:''}
+  <div class="note" style="margin-top:8px">${esc(t('hours_bias'))}</div>`;
+  }
+  h += `<div class="divider"></div>
   <div class="statline"><span class="sl">${esc(t('pal_class'))}</span><span class="sv" style="color:${R.palClass==='low'?'var(--muted)':(R.palClass==='mid'?'var(--good)':'var(--bad)')}">${esc(t('palc_'+R.palClass))}</span></div>
-  <div class="note" style="margin-top:6px">${esc(t('pal_class_note'))}</div>
+  ${R.palLow? `<div class="note" style="color:var(--bad);margin-top:6px">⚠️ ${esc(t('warn_pal_low').replace('{pal}',fmt(R.palRaw,2)))}</div>`:''}
   <details class="acc" data-acc="calc-palref" style="margin-top:8px"><summary><span>${esc(t('pal_ref_title'))}</span></summary><div class="accbody">
     <table class="mini"><tbody>${PAL_REF.map(r=>`<tr${(R.pal>=r.lo&&R.pal<r.hi)?' style="font-weight:700;color:var(--accent)"':''}><td>${esc(t(r.k))}</td><td class="num">${r.t}</td></tr>`).join('')}</tbody></table>
     <div class="note" style="margin-top:8px">${esc(t('pal_ref_note'))}</div>
   </div></details>
-  ${R.palLow? `<div class="note" style="color:var(--bad);margin-top:6px">⚠️ ${esc(t('warn_pal_low').replace('{pal}',fmt(R.palRaw,2)))}</div>`:''}
-  ${Math.abs(R.hours-24)>=0.01? `<div class="note" style="color:var(--bad);margin-top:6px">⚠️ ${esc(t('warn_pal_hours'))}</div>`:''}
   </div></details>
   <details class="acc" data-acc="calc-jog"><summary>${esc(t('jog_title'))} <span class="note" style="font-weight:400">+${fmt(R.jogDay)} ${t('kcal')}/${t('day_short')}${R.cardioDouble?' ⚠️':''}</span></summary><div class="accbody">
     <div class="note" style="margin:0 0 10px">${esc(t('jog_note'))}</div>
@@ -1386,7 +1571,17 @@ function renderCalc(){
   if(R.underBmr) flags += `<div class="note" style="color:var(--bad);margin-top:2px">⚠️ ${esc(t('warn_under_bmr').replace('{bmr}',fmt(R.bmr)))}</div>`;
   if(R.palLow) flags += `<div class="note" style="color:var(--bad);margin-top:2px">⚠️ ${esc(t('warn_pal_low').replace('{pal}',fmt(R.palRaw,2)))}</div>`;
   if(!rateOk && R.lossPctWeek>0) flags += `<div class="note" style="margin-top:2px">${R.lossPctWeek>1.0?'⚠️':'ℹ️'} ${esc(t('warn_rate').replace('{pct}',fmt(R.lossPctWeek,2)))}</div>`;
+  if(R.defHigh) flags += `<div class="note" style="color:var(--bad);margin-top:2px">⚠️ ${esc(t('warn_def_high'))}</div>`;
   if(flags) h += `<div class="card" style="margin-top:8px">${flags}</div>`;
+  h += `<details class="acc" data-acc="calc-adjust"><summary><span>${esc(t('adjust_title'))}</span></summary><div class="accbody">
+    <div class="note" style="margin:0 0 10px">${esc(t('adjust_intro'))}</div>
+    <table class="mini"><tbody>
+      <tr><td>1</td><td>${esc(t('adjust_1'))}</td></tr>
+      <tr><td>2</td><td>${esc(t('adjust_2').replace('{k}',fmt(R.intake*0.95)))}</td></tr>
+      <tr><td>3</td><td>${esc(t('adjust_3'))}</td></tr>
+    </tbody></table>
+    <div class="note" style="margin-top:8px">${esc(t('adjust_note'))}</div>
+  </div></details>`;
   h += `<details class="acc" data-acc="calc-bmr"><summary>${esc(t('bmr_formula'))} <span class="note" style="font-weight:400">${esc(t('bmrf_'+R.bmrF))}</span></summary><div class="accbody">
     <div class="seg" style="margin-bottom:10px">${BMR_FORMULAS.map(f=>
       `<button class="${R.bmrF===f?'on':''}" onclick="S.calc.bmrF='${f}';save();renderCalc()">${esc(t('bmrf_'+f))}</button>`).join('')}</div>
@@ -1395,6 +1590,7 @@ function renderCalc(){
       ${R.bmrAlt.map(a=>`<tr><td>${esc(t('bmrf_'+a.f))}</td><td class="num">${fmt(a.v)} ${t('kcal')}</td></tr>`).join('')}
     </tbody></table>
     <div class="note" style="margin-top:8px">${esc(t('bmr_formula_note'))}</div>
+    <div class="note" style="margin-top:8px">${esc(t('bmr_spread').replace('{lo}',fmt(Math.min(R.bmr,...R.bmrAlt.map(a=>a.v)))).replace('{hi}',fmt(Math.max(R.bmr,...R.bmrAlt.map(a=>a.v)))))}</div>
   </div></details>`;
   // ===== Ernährungsplan-Assistent =====
   const fatMin = R.fatMin;   // max(0,6 g/kg; 20 % der Kalorien) statt der quellenlosen Regel Groesse/3
@@ -1404,6 +1600,7 @@ function renderCalc(){
     <div class="planst">${esc(title)}</div><div class="note">${esc(sub)}</div></div><div class="planval">${val}</div></div>`;
   h += `<h2>${esc(t('plan_title'))}</h2>
   <div class="card"><div class="note" style="margin:0 0 10px">${esc(t('plan_sub'))}</div>
+    <div class="note" style="margin:0 0 10px">${esc(t('plan_kcalfactors'))}</div>
     ${step('1',t('plan_s1'),t('plan_s1t'),`<b>${fmt(R.intake)}</b> ${t('kcal')}`)}
     ${step('2',t('plan_s2'),t('plan_s2t'),`<b>${fmt(pm.p)}</b> ${t('g')}`)}
     ${step('3',t('plan_s3'),t('plan_s3t').replace('{min}',fatMin),`<b>${fmt(pm.f)}</b> ${t('g')}`)}
@@ -1430,12 +1627,29 @@ function renderCalc(){
       <button class="${c.macroMode==='man'?'on':''}" onclick="S.calc.macroMode='man';save();renderCalc()">${esc(t('manual'))}</button>
     </div>`;
   if(c.macroMode==='auto'){
+    const pw = (c.pRef==='current') ? +c.weight : Math.min(+c.weight, +c.goal||+c.weight);
     h += `<div class="sldrow"><label>${esc(t('prot_per_kg'))}</label>
       <input type="range" tabindex="-1" min="1.2" max="2.4" step="0.1" value="${c.ppk}" oninput="document.getElementById('ppkn').value=this.value" onchange="setCalcNum('ppk',this.value)">
       <div class="numwrap sldnum"><input type="number" id="ppkn" inputmode="decimal" min="1" max="3" step="0.1" value="${c.ppk}" onchange="setCalcNum('ppk',this.value)"></div></div>
-    <div class="sldrow"><label>${esc(t('fat_per_kg'))}</label>
-      <input type="range" tabindex="-1" min="0.5" max="1.2" step="0.05" value="${c.fpk}" oninput="document.getElementById('fpkn').value=this.value" onchange="setCalcNum('fpk',this.value)">
-      <div class="numwrap sldnum"><input type="number" id="fpkn" inputmode="decimal" min="0.3" max="2" step="0.05" value="${c.fpk}" onchange="setCalcNum('fpk',this.value)"></div></div>`;
+    <div class="statline"><span class="sl">${esc(t('prot_ref'))}</span><span class="sv">
+      <span class="seg" style="display:inline-flex;width:auto">
+        <button class="${c.pRef!=='current'?'on':''}" onclick="S.calc.pRef='goal';save();renderCalc()">${esc(t('prot_ref_goal'))}</button>
+        <button class="${c.pRef==='current'?'on':''}" onclick="S.calc.pRef='current';save();renderCalc()">${esc(t('prot_ref_cur'))}</button>
+      </span></span></div>
+    <div class="note" style="margin:2px 0 12px">${esc(t('prot_ref_note').replace('{w}',fmt(pw,1)).replace('{p}',fmt(c.ppk*pw)))}</div>
+    <div class="statline"><span class="sl">${esc(t('fat_mode'))}</span><span class="sv">
+      <span class="seg" style="display:inline-flex;width:auto">
+        <button class="${c.fatMode!=='gkg'?'on':''}" onclick="S.calc.fatMode='pct';save();renderCalc()">${esc(t('fat_mode_pct'))}</button>
+        <button class="${c.fatMode==='gkg'?'on':''}" onclick="S.calc.fatMode='gkg';save();renderCalc()">${esc(t('fat_mode_gkg'))}</button>
+      </span></span></div>
+    ${c.fatMode==='gkg'
+      ? `<div class="sldrow"><label>${esc(t('fat_per_kg'))}</label>
+          <input type="range" tabindex="-1" min="0.5" max="1.2" step="0.05" value="${c.fpk}" oninput="document.getElementById('fpkn').value=this.value" onchange="setCalcNum('fpk',this.value)">
+          <div class="numwrap sldnum"><input type="number" id="fpkn" inputmode="decimal" min="0.3" max="2" step="0.05" value="${c.fpk}" onchange="setCalcNum('fpk',this.value)"></div></div>`
+      : `<div class="sldrow"><label>${esc(t('fat_pct'))}</label>
+          <input type="range" tabindex="-1" min="15" max="45" step="1" value="${c.fatPct||25}" oninput="document.getElementById('fpctn').value=this.value" onchange="setCalcNum('fatPct',this.value)">
+          <div class="numwrap sldnum"><input type="number" id="fpctn" inputmode="numeric" min="15" max="45" step="1" value="${c.fatPct||25}" onchange="setCalcNum('fatPct',this.value)"><span class="numunit">%</span></div></div>`}
+    <div class="note" style="margin-top:2px">${esc(t('fat_min_note').replace('{min}',fmt(R.fatMin)))}</div>`;
   }else{
     const sum = (+c.mp)+(+c.mf)+(+c.mc);
     h += `<div class="rowflex">
