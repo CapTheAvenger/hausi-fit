@@ -1209,17 +1209,51 @@ function loadMyCalc(){
 }
 function setPalH(i, val){
   val = Math.max(0, Math.min(24, +val||0));
-  S.calc.palH[i] = val; save(); renderCalc();
+  S.calc.palH[i] = val; save(); calcSoon();
 }
 function setCalcNum(key, val){
-  S.calc[key] = +val||0; save(); renderCalc();
+  S.calc[key] = +val||0; save(); calcSoon();
+}
+/* Ein Neu-Rendern ersetzt das komplette innerHTML einer View. Ohne die folgenden
+   zwei Helfer klappen dabei alle <details> zu und der Fokus geht verloren —
+   Durchtabben durch die Eingabefelder wird unmoeglich. */
+const ACC_OPEN = new Set();
+document.addEventListener('toggle', e=>{
+  const d = e.target;
+  if(!d || !d.dataset || !d.dataset.acc) return;
+  if(d.open) ACC_OPEN.add(d.dataset.acc); else ACC_OPEN.delete(d.dataset.acc);
+}, true);
+function keepUI(viewId, build){
+  const root = document.getElementById(viewId);
+  const ae = document.activeElement;
+  const fid = (ae && ae.id && root && root.contains(ae)) ? ae.id : null;
+  let ss=null, se=null;
+  if(fid){ try{ ss=ae.selectionStart; se=ae.selectionEnd; }catch(err){} }
+  const sy = window.scrollY;
+  root.innerHTML = build();
+  root.querySelectorAll('details[data-acc]').forEach(d=>{ if(ACC_OPEN.has(d.dataset.acc)) d.open = true; });
+  if(fid){
+    const el = document.getElementById(fid);
+    if(el){
+      el.focus({preventScroll:true});
+      if(ss!=null){ try{ el.setSelectionRange(ss,se); }catch(err){} }
+    }
+  }
+  window.scrollTo(0, sy);
+}
+/* Aus einem change-Handler heraus NICHT sofort neu rendern: erst laesst man den
+   Browser den Tab-Sprung zu Ende fuehren, dann wird gerendert und der Fokus
+   liegt bereits auf dem naechsten Feld. */
+function calcSoon(){
+  if(window._calcRT) return;
+  window._calcRT = setTimeout(()=>{ window._calcRT = null; renderCalc(); }, 0);
 }
 function renderCalc(){
   const c = S.calc, R = calcAll();
   const md = macroCalc(R.intake), mm = macroCalc(R.maint);
   const rf = REFEED.find(r=> +c.bf>=r.lo && +c.bf<r.hi) || REFEED[0];
   const rfDays = c.gender==='m'?rf.m:rf.f;
-  const inp=(id,lab,val,step,min)=>`<div class="fld"><label>${esc(lab)}</label><input type="number" inputmode="decimal" step="${step||1}" min="${min||0}" value="${val}" onchange="S.calc.${id}=+this.value;save();renderCalc()"></div>`;
+  const inp=(id,lab,val,step,min)=>`<div class="fld"><label for="cf_${id}">${esc(lab)}</label><input id="cf_${id}" type="number" inputmode="decimal" step="${step||1}" min="${min||0}" value="${val}" onchange="S.calc.${id}=+this.value;save();calcSoon()"></div>`;
   let h = `<div style="display:flex;gap:8px;margin:6px 0 2px">
     <button class="btn sec" style="flex:1" onclick="saveMyCalc()">💾 ${esc(t('calc_savemine'))}</button>
     ${S.calcSaved? `<button class="btn sec" style="flex:1" onclick="loadMyCalc()">↩️ ${esc(t('calc_loadmine'))}</button>`:''}
@@ -1235,9 +1269,9 @@ function renderCalc(){
       ${inp('age',t('age'),c.age)}
     </div>
     <div class="rowflex" style="margin-bottom:10px">${inp('height',t('height'),c.height)}${inp('weight',t('cur_weight'),c.weight,0.1)}</div>
-    <div class="rowflex" style="margin-bottom:10px">${inp('goal',t('goal_weight'),c.goal,0.1)}<div class="fld"><label>${esc(t('deficit'))}</label><input type="number" inputmode="decimal" step="1" min="0" max="25" value="${c.deficit}" onchange="S.calc.deficit=Math.max(0,Math.min(25,+this.value||0));save();renderCalc()"></div></div>
+    <div class="rowflex" style="margin-bottom:10px">${inp('goal',t('goal_weight'),c.goal,0.1)}<div class="fld"><label for="cf_deficit">${esc(t('deficit'))}</label><input id="cf_deficit" type="number" inputmode="decimal" step="1" min="0" max="25" value="${c.deficit}" onchange="S.calc.deficit=Math.max(0,Math.min(25,+this.value||0));save();calcSoon()"></div></div>
     <div class="rowflex">${inp('bf',t('bodyfat'),c.bf)}</div>
-    <details class="acc" style="margin:10px 0 0"><summary><span>${esc(t('bf_help'))}</span></summary><div class="accbody">
+    <details class="acc" data-acc="calc-bf" style="margin:10px 0 0"><summary><span>${esc(t('bf_help'))}</span></summary><div class="accbody">
       <div class="seg" style="margin-bottom:10px">
         <button class="${c.gender==='m'?'on':''}" onclick="S.calc.gender='m';save();renderCalc()">${esc(t('bf_men'))}</button>
         <button class="${c.gender==='f'?'on':''}" onclick="S.calc.gender='f';save();renderCalc()">${esc(t('bf_women'))}</button>
@@ -1246,10 +1280,10 @@ function renderCalc(){
       <div class="note" style="margin-top:8px">${esc(t('bf_help_note'))}</div>
     </div></details>
   </div>
-  <details class="acc"><summary>${esc(t('pal_title'))} <span class="note" style="font-weight:400">PAL ${fmt(R.pal,2)}${R.palLow?' ⚠️':''}</span></summary><div class="accbody">`;
+  <details class="acc" data-acc="calc-pal"><summary>${esc(t('pal_title'))} <span class="note" style="font-weight:400">PAL ${fmt(R.pal,2)}${R.palLow?' ⚠️':''}</span></summary><div class="accbody">`;
   PAL_ROWS.forEach((row,i)=>{
     h += `<div class="sldrow"><label>${esc(t(row.k))} <span class="note">(${row.v})</span></label>
-      <input type="range" min="0" max="16" step="0.5" value="${c.palH[i]}" oninput="document.getElementById('paln${i}').value=this.value" onchange="setPalH(${i},this.value)">
+      <input type="range" tabindex="-1" min="0" max="16" step="0.5" value="${c.palH[i]}" oninput="document.getElementById('paln${i}').value=this.value" onchange="setPalH(${i},this.value)">
       <div class="numwrap sldnum"><input type="number" id="paln${i}" inputmode="decimal" min="0" max="24" step="0.5" value="${c.palH[i]}" onchange="setPalH(${i},this.value)"><span class="numunit">h</span></div></div>`;
   });
   h += `<div class="statline"><span class="sl">${esc(t('pal_sum'))}</span><span class="sv" style="color:${Math.abs(R.hours-24)<0.01?'var(--good)':'var(--bad)'}">${fmt(R.hours,1)} / 24 h</span></div>
@@ -1257,7 +1291,7 @@ function renderCalc(){
   ${R.palLow? `<div class="note" style="color:var(--bad);margin-top:6px">⚠️ ${esc(t('warn_pal_low').replace('{pal}',fmt(R.palRaw,2)))}</div>`:''}
   ${Math.abs(R.hours-24)>=0.01? `<div class="note" style="color:var(--bad);margin-top:6px">⚠️ ${esc(t('warn_pal_hours'))}</div>`:''}
   </div></details>
-  <details class="acc"><summary>${esc(t('jog_title'))} <span class="note" style="font-weight:400">+${fmt(R.jogWeek)} ${t('kcal')}/7d</span></summary><div class="accbody">
+  <details class="acc" data-acc="calc-jog"><summary>${esc(t('jog_title'))} <span class="note" style="font-weight:400">+${fmt(R.jogWeek)} ${t('kcal')}/7d</span></summary><div class="accbody">
     <div class="rowflex">${inp('jogS',t('jog_per_week'),c.jogS)}${inp('jogK',t('jog_kcal'),c.jogK,50)}</div>
   </div></details>
   <h2>${esc(t('results'))}</h2>
@@ -1278,7 +1312,7 @@ function renderCalc(){
   if(R.palLow) flags += `<div class="note" style="color:var(--bad);margin-top:2px">⚠️ ${esc(t('warn_pal_low').replace('{pal}',fmt(R.palRaw,2)))}</div>`;
   if(!rateOk && R.lossPctWeek>0) flags += `<div class="note" style="margin-top:2px">${R.lossPctWeek>1.0?'⚠️':'ℹ️'} ${esc(t('warn_rate').replace('{pct}',fmt(R.lossPctWeek,2)))}</div>`;
   if(flags) h += `<div class="card" style="margin-top:8px">${flags}</div>`;
-  h += `<details class="acc"><summary>${esc(t('bmr_formula'))} <span class="note" style="font-weight:400">${esc(t('bmrf_'+R.bmrF))}</span></summary><div class="accbody">
+  h += `<details class="acc" data-acc="calc-bmr"><summary>${esc(t('bmr_formula'))} <span class="note" style="font-weight:400">${esc(t('bmrf_'+R.bmrF))}</span></summary><div class="accbody">
     <div class="seg" style="margin-bottom:10px">${BMR_FORMULAS.map(f=>
       `<button class="${R.bmrF===f?'on':''}" onclick="S.calc.bmrF='${f}';save();renderCalc()">${esc(t('bmrf_'+f))}</button>`).join('')}</div>
     <table class="mini"><tbody>
@@ -1322,17 +1356,17 @@ function renderCalc(){
     </div>`;
   if(c.macroMode==='auto'){
     h += `<div class="sldrow"><label>${esc(t('prot_per_kg'))}</label>
-      <input type="range" min="1.2" max="2.4" step="0.1" value="${c.ppk}" oninput="document.getElementById('ppkn').value=this.value" onchange="setCalcNum('ppk',this.value)">
+      <input type="range" tabindex="-1" min="1.2" max="2.4" step="0.1" value="${c.ppk}" oninput="document.getElementById('ppkn').value=this.value" onchange="setCalcNum('ppk',this.value)">
       <div class="numwrap sldnum"><input type="number" id="ppkn" inputmode="decimal" min="1" max="3" step="0.1" value="${c.ppk}" onchange="setCalcNum('ppk',this.value)"></div></div>
     <div class="sldrow"><label>${esc(t('fat_per_kg'))}</label>
-      <input type="range" min="0.5" max="1.2" step="0.05" value="${c.fpk}" oninput="document.getElementById('fpkn').value=this.value" onchange="setCalcNum('fpk',this.value)">
+      <input type="range" tabindex="-1" min="0.5" max="1.2" step="0.05" value="${c.fpk}" oninput="document.getElementById('fpkn').value=this.value" onchange="setCalcNum('fpk',this.value)">
       <div class="numwrap sldnum"><input type="number" id="fpkn" inputmode="decimal" min="0.3" max="2" step="0.05" value="${c.fpk}" onchange="setCalcNum('fpk',this.value)"></div></div>`;
   }else{
     const sum = (+c.mp)+(+c.mf)+(+c.mc);
     h += `<div class="rowflex">
-      <div class="fld"><label>${esc(t('protein'))} %</label><input type="number" value="${c.mp}" onchange="S.calc.mp=+this.value;save();renderCalc()"></div>
-      <div class="fld"><label>${esc(t('fat'))} %</label><input type="number" value="${c.mf}" onchange="S.calc.mf=+this.value;save();renderCalc()"></div>
-      <div class="fld"><label>${esc(t('carbs'))} %</label><input type="number" value="${c.mc}" onchange="S.calc.mc=+this.value;save();renderCalc()"></div>
+      <div class="fld"><label for="cf_mp">${esc(t('protein'))} %</label><input id="cf_mp" type="number" inputmode="numeric" value="${c.mp}" onchange="S.calc.mp=+this.value;save();calcSoon()"></div>
+      <div class="fld"><label for="cf_mf">${esc(t('fat'))} %</label><input id="cf_mf" type="number" inputmode="numeric" value="${c.mf}" onchange="S.calc.mf=+this.value;save();calcSoon()"></div>
+      <div class="fld"><label for="cf_mc">${esc(t('carbs'))} %</label><input id="cf_mc" type="number" inputmode="numeric" value="${c.mc}" onchange="S.calc.mc=+this.value;save();calcSoon()"></div>
     </div>${sum!==100?`<div class="note" style="color:var(--bad);margin-top:6px">${esc(t('pct_warn'))} (${sum}%)</div>`:''}`;
   }
   const mrow=(m)=>`<tr><td>${esc(t('protein'))}</td><td class="num">${fmt(m.p)} ${t('g')}</td><td class="num">${fmt(m.pk)} ${t('kcal')}</td></tr>
@@ -1349,7 +1383,7 @@ function renderCalc(){
     <table class="mini"><thead><tr><th>${esc(t('bodyfat'))}</th><th class="num">${esc(t('male'))}</th><th class="num">${esc(t('female'))}</th></tr></thead><tbody>`;
   for(const r of REFEED){ h += `<tr${r===rf?' style="font-weight:700"':''}><td>${r.bf} %</td><td class="num">${r.m}</td><td class="num">${r.f}</td></tr>`; }
   h += `</tbody></table><div class="note" style="margin-top:8px">${esc(t('refeed_note'))}</div></div>`;
-  document.getElementById('v-calc').innerHTML = h;
+  keepUI('v-calc', ()=>h);
 }
 
 /* ================= Measurements ================= */
