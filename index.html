@@ -311,6 +311,24 @@ const CT = {"45° Beinpresse hohe Fußstellung":{"de":"45° Beinpresse hohe Fuß
 const I18N = {
 de:{
   tab_home:"Start",
+  pal_ref_title:"Womit ist mein Wert vergleichbar?",
+  palr_desk:"Nur sitzende Tätigkeit, wenig Freizeitaktivität (Büro)",
+  palr_mixed:"Sitzend, zeitweise gehend/stehend (Labor, Fließband, Studium)",
+  palr_stand:"Überwiegend gehende/stehende Arbeit (Verkauf, Handwerk, Pflege)",
+  palr_hard:"Körperlich anstrengende Arbeit oder Leistungssport (Bau, Landwirtschaft)",
+  pal_ref_note:"Richtwerte der DGE für den ganzen Tag. Ein Bürojob mit 3–5 Trainingseinheiten pro Woche landet bei etwa 1,5–1,7. Passt dein Wert nicht zu der Zeile, die deinen Alltag beschreibt, stimmt die Stundenverteilung oben nicht.",
+  weeks:"Wo.",
+  day_short:"Tag",
+  weeks_to_goal:"Wochen bis Zielgewicht",
+  pal_class:"Einordnung",
+  palc_low:"wenig aktiv (1,40–1,69)",
+  palc_mid:"moderat aktiv (1,70–1,99)",
+  palc_high:"sehr aktiv (2,00–2,39)",
+  palc_vhigh:"extrem aktiv (ab 2,40) – prüfen!",
+  pal_class_note:"Einteilung nach FAO/WHO/UNU. Ein Bürojob mit Training landet meist bei 1,5–1,7. Kommst du höher heraus, stehen wahrscheinlich zu viele Stunden in den unteren Zeilen.",
+  jog_note:"Nur für Cardio, das NICHT schon in der PAL-Tabelle steht. Der Wert fließt als Tagesdurchschnitt in deine Erhaltungskalorien ein.",
+  jog_in_maint:"In den Erhaltungskalorien enthalten",
+  warn_cardio_double:"Du hast {h} h in der Zeile „Training / schwere körperliche Arbeit\" UND zusätzliche Cardio-Einheiten eingetragen. Das zählt dein Training doppelt. Entweder die Stunden dort auf 0 setzen oder die Cardio-Einheiten hier auf 0.",
   warn_pal_hours:"Die Stunden ergeben nicht 24. Verteile deinen ganzen Tag – auch Arbeit, Weg und Haushalt –, sonst ist der PAL-Wert falsch.",
   train_finish:"Training abgeschlossen",
   train_finished:"Stark. Nächstes Training steht bereit ✓",
@@ -367,8 +385,8 @@ de:{
   bf_men:"Männer", bf_women:"Frauen",
   pal_title:"Aktivität (PAL) – Stunden pro Tag", pal_sum:"Stunden gesamt", pal_val:"PAL-Wert",
   pal_sleep:"Schlafen", pal_lying:"Sitzend/liegend (TV)", pal_sitting:"Sitzend, wenig aktiv (Büro)",
-  pal_sitstand:"Sitzend mit stehender Tätigkeit", pal_standing:"Überwiegend stehend/gehend", pal_hard:"Körperlich sehr aktiv/Sport",
-  jog_title:"Joggen / Cardio", jog_per_week:"Einheiten pro Woche", jog_kcal:"kcal je Einheit",
+  pal_sitstand:"Sitzend mit stehender Tätigkeit", pal_standing:"Überwiegend stehend/gehend", pal_hard:"Training / schwere körperliche Arbeit (inkl. Pausen)",
+  jog_title:"Zusätzliches Cardio", jog_per_week:"Einheiten pro Woche", jog_kcal:"kcal je Einheit",
   results:"Ergebnisse", maint:"Erhaltungskalorien", intake:"Zielkalorien (Defizit)", deficit_day:"Defizit pro Tag",
   loss_week:"Abnahme pro Woche", loss_week_jog:"Abnahme mit Cardio", week_kcal:"Wochenkalorien",
   bmr:"Grundumsatz", tdee:"Leistungsumsatz",
@@ -454,6 +472,24 @@ de:{
 },
 en:{
   tab_home:"Home",
+  pal_ref_title:"What is my value comparable to?",
+  palr_desk:"Purely seated work, little leisure activity (office)",
+  palr_mixed:"Seated, occasionally walking/standing (lab, assembly line, student)",
+  palr_stand:"Mostly walking/standing work (retail, trades, nursing)",
+  palr_hard:"Physically demanding work or competitive sport (construction, farming)",
+  pal_ref_note:"Whole-day reference values from the German Nutrition Society. A desk job with 3–5 training sessions per week lands around 1.5–1.7. If your value does not match the row describing your everyday life, the hours above are off.",
+  weeks:"wks",
+  day_short:"day",
+  weeks_to_goal:"Weeks to goal weight",
+  pal_class:"Category",
+  palc_low:"sedentary (1.40–1.69)",
+  palc_mid:"moderately active (1.70–1.99)",
+  palc_high:"vigorously active (2.00–2.39)",
+  palc_vhigh:"extremely active (2.40+) – check!",
+  pal_class_note:"Categories per FAO/WHO/UNU. A desk job plus training usually lands at 1.5–1.7. If you come out higher, too many hours are probably sitting in the lower rows.",
+  jog_note:"Only for cardio that is NOT already in the PAL table. It feeds into your maintenance calories as a daily average.",
+  jog_in_maint:"Included in maintenance calories",
+  warn_cardio_double:"You entered {h} h in the \"training / heavy physical work\" row AND extra cardio sessions. That counts your training twice. Either set those hours to 0 or the cardio sessions here to 0.",
   warn_pal_hours:"The hours do not add up to 24. Spread your whole day across the rows – including work, commute and chores – otherwise the PAL value is wrong.",
   train_finish:"Finish workout",
   train_finished:"Nice. Next session is ready ✓",
@@ -510,8 +546,8 @@ en:{
   bf_men:"Men", bf_women:"Women",
   pal_title:"Activity (PAL) – hours per day", pal_sum:"Total hours", pal_val:"PAL value",
   pal_sleep:"Sleep", pal_lying:"Sitting/lying (TV)", pal_sitting:"Sitting, little activity (office)",
-  pal_sitstand:"Sitting with standing tasks", pal_standing:"Mostly standing/walking", pal_hard:"Very active / sports",
-  jog_title:"Jogging / cardio", jog_per_week:"Sessions per week", jog_kcal:"kcal per session",
+  pal_sitstand:"Sitting with standing tasks", pal_standing:"Mostly standing/walking", pal_hard:"Training / heavy physical work (incl. rest)",
+  jog_title:"Extra cardio", jog_per_week:"Sessions per week", jog_kcal:"kcal per session",
   results:"Results", maint:"Maintenance calories", intake:"Target calories (deficit)", deficit_day:"Deficit per day",
   loss_week:"Loss per week", loss_week_jog:"Loss incl. cardio", week_kcal:"Weekly calories",
   bmr:"BMR", tdee:"Total daily energy",
@@ -597,6 +633,24 @@ en:{
 },
 es:{
   tab_home:"Inicio",
+  pal_ref_title:"¿Con qué es comparable mi valor?",
+  palr_desk:"Trabajo solo sentado, poca actividad de ocio (oficina)",
+  palr_mixed:"Sentado, a veces de pie/caminando (laboratorio, cadena de montaje, estudiante)",
+  palr_stand:"Trabajo mayormente de pie/caminando (comercio, oficios, enfermería)",
+  palr_hard:"Trabajo físicamente exigente o deporte de competición (construcción, agricultura)",
+  pal_ref_note:"Valores de referencia para todo el día (DGE). Un trabajo de oficina con 3–5 entrenamientos por semana queda en torno a 1,5–1,7. Si tu valor no coincide con la fila que describe tu día a día, las horas de arriba no cuadran.",
+  weeks:"sem.",
+  day_short:"día",
+  weeks_to_goal:"Semanas hasta el peso objetivo",
+  pal_class:"Clasificación",
+  palc_low:"poco activo (1,40–1,69)",
+  palc_mid:"moderadamente activo (1,70–1,99)",
+  palc_high:"muy activo (2,00–2,39)",
+  palc_vhigh:"extremadamente activo (2,40+) – ¡revisar!",
+  pal_class_note:"Clasificación según FAO/OMS/UNU. Un trabajo de oficina con entrenamiento suele quedar en 1,5–1,7. Si sale más alto, probablemente haya demasiadas horas en las filas inferiores.",
+  jog_note:"Solo para el cardio que NO esté ya en la tabla PAL. Se suma a tus calorías de mantenimiento como media diaria.",
+  jog_in_maint:"Incluido en las calorías de mantenimiento",
+  warn_cardio_double:"Has puesto {h} h en la fila «entrenamiento / trabajo físico duro» Y además sesiones de cardio. Eso cuenta tu entrenamiento dos veces. Pon esas horas a 0 o las sesiones de cardio a 0.",
   warn_pal_hours:"Las horas no suman 24. Reparte todo tu día – incluidos trabajo, desplazamientos y tareas de casa – o el valor PAL será incorrecto.",
   train_finish:"Entrenamiento terminado",
   train_finished:"Bien. La próxima sesión está lista ✓",
@@ -653,8 +707,8 @@ es:{
   bf_men:"Hombres", bf_women:"Mujeres",
   pal_title:"Actividad (PAL) – horas al día", pal_sum:"Horas en total", pal_val:"Valor PAL",
   pal_sleep:"Dormir", pal_lying:"Sentado/acostado (TV)", pal_sitting:"Sentado, poco activo (oficina)",
-  pal_sitstand:"Sentado con tareas de pie", pal_standing:"Mayormente de pie/caminando", pal_hard:"Muy activo / deporte",
-  jog_title:"Correr / cardio", jog_per_week:"Sesiones por semana", jog_kcal:"kcal por sesión",
+  pal_sitstand:"Sentado con tareas de pie", pal_standing:"Mayormente de pie/caminando", pal_hard:"Entrenamiento / trabajo físico duro (con descansos)",
+  jog_title:"Cardio adicional", jog_per_week:"Sesiones por semana", jog_kcal:"kcal por sesión",
   results:"Resultados", maint:"Calorías de mantenimiento", intake:"Calorías objetivo (déficit)", deficit_day:"Déficit por día",
   loss_week:"Pérdida por semana", loss_week_jog:"Pérdida con cardio", week_kcal:"Calorías semanales",
   bmr:"Metabolismo basal", tdee:"Gasto energético total",
@@ -1132,10 +1186,16 @@ function newEx(splitId, dayIdx, slotIdx, pattern){
 /* ================= Calculator ================= */
 const PAL_ROWS = [
   {k:'pal_sleep', v:1.0}, {k:'pal_lying', v:1.2}, {k:'pal_sitting', v:1.5},
-  {k:'pal_sitstand', v:1.9}, {k:'pal_standing', v:2.3}, {k:'pal_hard', v:5.0},
+  {k:'pal_sitstand', v:1.8}, {k:'pal_standing', v:2.3}, {k:'pal_hard', v:3.5},
 ];
 /* PAR-Werte nach FAO/WHO/UNU 2004 (Human Energy Requirements, Tab. 5.2).
    Die Summe ergibt den PAL; Nahrungsthermogenese ist darin bereits enthalten. */
+const PAL_REF = [
+  {k:'palr_desk',  t:'1,4–1,5', lo:0,    hi:1.55},
+  {k:'palr_mixed', t:'1,6–1,7', lo:1.55, hi:1.75},
+  {k:'palr_stand', t:'1,8–1,9', lo:1.75, hi:1.95},
+  {k:'palr_hard',  t:'2,0–2,4', lo:1.95, hi:99},
+];
 const PAL_FLOOR = 1.40;   // FAO/WHO/UNU: Untergrenze fuer frei lebende Erwachsene
 const KCAL_PER_KG = 7700; // Energiegehalt Koerperfett (Wishnofsky), inkl. Anpassungsverlusten
 const BMR_FORMULAS = ['mifflin','harris','katch'];
@@ -1165,19 +1225,25 @@ function calcAll(){
   const palLow = palRaw < PAL_FLOOR;
   const pal = Math.max(PAL_FLOOR, palRaw);
   const tdee = bmr*pal;
-  const maint = tdee;                       // Erhaltungsbedarf = heutiger Verbrauch
   const goalMaint = bmrFor(formula, {...c, weight:goal})*pal;  // Bedarf beim Zielgewicht (nur Info)
+  const jogDay = ((+c.jogS||0)*(+c.jogK||0))/7;   // zusaetzliches Cardio als Tagesdurchschnitt
+  const maint = tdee + jogDay;              // Erhaltungsbedarf = heutiger Verbrauch inkl. Cardio
   const defPct = Math.max(0, Math.min(25, +c.deficit||0));
   const defCapped = (+c.deficit||0) > 25;
   const intake = maint*(1-defPct/100);
   const defDay = maint-intake;
   const jogWeek = (+c.jogS||0)*(+c.jogK||0);
+  const sportH = +c.palH[5]||0;
   const weekDef = defDay*7;
-  const lossWeek = weekDef/KCAL_PER_KG, lossWeekJog=(weekDef+jogWeek)/KCAL_PER_KG;
+  const lossWeek = weekDef/KCAL_PER_KG;
+  const toLose = Math.max(0, w-goal);
   return {bmr, bmrF:formula, bmrAlt, hours, pal, palRaw, palLow, tdee, goalMaint, maint,
-    intake, defPct, defCapped, defDay, weekDef, lossWeek, lossWeekJog,
-    lossPctWeek: w>0 ? lossWeek/w*100 : 0, lossPctWeekJog: w>0 ? lossWeekJog/w*100 : 0,
-    underBmr: intake < bmr, weekKcal:intake*7, jogWeek,
+    intake, defPct, defCapped, defDay, weekDef, lossWeek,
+    lossPctWeek: w>0 ? lossWeek/w*100 : 0,
+    weeksToGoal: (toLose>0 && lossWeek>0.01) ? toLose/lossWeek : 0, toLose,
+    underBmr: intake < bmr, weekKcal:intake*7, jogWeek, jogDay, sportH,
+    cardioDouble: sportH>0 && jogWeek>0,
+    palClass: pal<1.70?'low':(pal<2.00?'mid':(pal<2.40?'high':'vhigh')),
     fatMin: Math.max(Math.round(0.6*w), Math.round(0.20*maint*(1-defPct/100)/9)),
     carbMin: 130};
 }
@@ -1288,11 +1354,20 @@ function renderCalc(){
   });
   h += `<div class="statline"><span class="sl">${esc(t('pal_sum'))}</span><span class="sv" style="color:${Math.abs(R.hours-24)<0.01?'var(--good)':'var(--bad)'}">${fmt(R.hours,1)} / 24 h</span></div>
   <div class="statline"><span class="sl">${esc(t('pal_val'))}</span><span class="sv">${R.palLow? `<span style="color:var(--muted);text-decoration:line-through">${fmt(R.palRaw,2)}</span> → <span style="color:var(--bad)">${fmt(R.pal,2)}</span>` : fmt(R.pal,2)}</span></div>
+  <div class="statline"><span class="sl">${esc(t('pal_class'))}</span><span class="sv" style="color:${R.palClass==='low'?'var(--muted)':(R.palClass==='mid'?'var(--good)':'var(--bad)')}">${esc(t('palc_'+R.palClass))}</span></div>
+  <div class="note" style="margin-top:6px">${esc(t('pal_class_note'))}</div>
+  <details class="acc" data-acc="calc-palref" style="margin-top:8px"><summary><span>${esc(t('pal_ref_title'))}</span></summary><div class="accbody">
+    <table class="mini"><tbody>${PAL_REF.map(r=>`<tr${(R.pal>=r.lo&&R.pal<r.hi)?' style="font-weight:700;color:var(--accent)"':''}><td>${esc(t(r.k))}</td><td class="num">${r.t}</td></tr>`).join('')}</tbody></table>
+    <div class="note" style="margin-top:8px">${esc(t('pal_ref_note'))}</div>
+  </div></details>
   ${R.palLow? `<div class="note" style="color:var(--bad);margin-top:6px">⚠️ ${esc(t('warn_pal_low').replace('{pal}',fmt(R.palRaw,2)))}</div>`:''}
   ${Math.abs(R.hours-24)>=0.01? `<div class="note" style="color:var(--bad);margin-top:6px">⚠️ ${esc(t('warn_pal_hours'))}</div>`:''}
   </div></details>
-  <details class="acc" data-acc="calc-jog"><summary>${esc(t('jog_title'))} <span class="note" style="font-weight:400">+${fmt(R.jogWeek)} ${t('kcal')}/7d</span></summary><div class="accbody">
+  <details class="acc" data-acc="calc-jog"><summary>${esc(t('jog_title'))} <span class="note" style="font-weight:400">+${fmt(R.jogDay)} ${t('kcal')}/${t('day_short')}${R.cardioDouble?' ⚠️':''}</span></summary><div class="accbody">
+    <div class="note" style="margin:0 0 10px">${esc(t('jog_note'))}</div>
     <div class="rowflex">${inp('jogS',t('jog_per_week'),c.jogS)}${inp('jogK',t('jog_kcal'),c.jogK,50)}</div>
+    ${R.jogWeek? `<div class="statline" style="margin-top:8px"><span class="sl">${esc(t('jog_in_maint'))}</span><span class="sv">+${fmt(R.jogDay)} ${t('kcal')}/${t('day_short')}</span></div>`:''}
+    ${R.cardioDouble? `<div class="note" style="color:var(--bad);margin-top:8px">⚠️ ${esc(t('warn_cardio_double').replace('{h}',fmt(R.sportH,1)))}</div>`:''}
   </div></details>
   <h2>${esc(t('results'))}</h2>
   <div class="tiles">
@@ -1300,7 +1375,7 @@ function renderCalc(){
     <div class="tile"><div class="tv">${fmt(R.maint)}</div><div class="tl">${esc(t('maint'))} (${t('kcal')})</div></div>
     <div class="tile"><div class="tv">${fmt(R.defDay)}</div><div class="tl">${esc(t('deficit_day'))} (${t('kcal')})</div></div>
     <div class="tile"><div class="tv">${fmt(R.lossWeek,2)} <span class="tu">${t('kg')}</span></div><div class="tl">${esc(t('loss_week'))}</div></div>
-    <div class="tile"><div class="tv">${fmt(R.lossWeekJog,2)} <span class="tu">${t('kg')}</span></div><div class="tl">${esc(t('loss_week_jog'))}</div></div>
+    <div class="tile"><div class="tv">${R.weeksToGoal? fmt(R.weeksToGoal,0) : '–'} <span class="tu">${R.weeksToGoal?t('weeks'):''}</span></div><div class="tl">${esc(t('weeks_to_goal'))}</div></div>
     <div class="tile"><div class="tv">${fmt(R.bmr)}</div><div class="tl">${esc(t('bmr'))} (${t('kcal')})</div></div>
     <div class="tile"><div class="tv">${fmt(R.tdee)}</div><div class="tl">${esc(t('tdee'))} (${t('kcal')})</div></div>
     <div class="tile"><div class="tv">${fmt(R.lossPctWeek,2)} <span class="tu">%</span></div><div class="tl">${esc(t('loss_pct_week'))}</div></div>
