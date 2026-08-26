@@ -311,6 +311,12 @@ const CT = {"45° Beinpresse hohe Fußstellung":{"de":"45° Beinpresse hohe Fuß
 const I18N = {
 de:{
   tab_home:"Start",
+  rir_setting:"RIR mitschreiben",
+  rir_off:"aus",
+  rir_on:"an",
+  rir_setting_note:"RIR („Repetitions in Reserve\") ist die Zahl der Wiederholungen, die du am Satzende noch geschafft hättest. Angeschaltet bekommst du bei jeder Übung ein zusätzliches Feld dafür. Wenn du ohne RIR trainierst, lass es aus – dann bleibt die Eingabe so schlank wie bisher.",
+  rir_what:"Was bedeutet RIR?",
+  rir_explain:"RIR steht für „Repetitions in Reserve\" – Wiederholungen im Reservebereich. RIR 0 heißt: keine weitere Wiederholung mehr möglich. RIR 2 heißt: zwei wären noch gegangen. Der Wert hilft, die Belastung zu steuern, Überanstrengung zu vermeiden und dauerhaft Fortschritte zu machen. (Formulierung aus deinem Kursmaterial.)",
   hours_bias:"Diese Methode fällt meist 0,10–0,15 niedriger aus als der Ganztages-Faktor, weil der Schlaf mit 0,95 ein Drittel des Tages nach unten zieht. Referenz für deinen Kurs ist der Faktor – nutze das Stundenraster nur als Gegenprobe.",
   act_title:"Aktivität",
   act_simple:"Faktor wählen",
@@ -514,6 +520,12 @@ de:{
 },
 en:{
   tab_home:"Home",
+  rir_setting:"Track RIR",
+  rir_off:"off",
+  rir_on:"on",
+  rir_setting_note:"RIR (\"repetitions in reserve\") is how many reps you could still have done at the end of a set. Switched on, every exercise gets an extra field for it. If you train without RIR, leave it off and the input stays as lean as before.",
+  rir_what:"What does RIR mean?",
+  rir_explain:"RIR stands for \"repetitions in reserve\". RIR 0 means no further rep was possible. RIR 2 means two more would have been. The value helps control the load, avoid overreaching and keep progressing. (Wording from your course material.)",
   hours_bias:"This method usually lands 0.10–0.15 lower than the whole-day factor, because sleep at 0.95 drags a third of the day down. Your course uses the factor as its reference – treat the hour grid as a cross-check.",
   act_title:"Activity",
   act_simple:"Pick a factor",
@@ -717,6 +729,12 @@ en:{
 },
 es:{
   tab_home:"Inicio",
+  rir_setting:"Registrar RIR",
+  rir_off:"no",
+  rir_on:"sí",
+  rir_setting_note:"RIR («repeticiones en reserva») es cuántas repeticiones más habrías podido hacer al final de la serie. Activado, cada ejercicio muestra un campo extra. Si entrenas sin RIR, déjalo desactivado y la entrada queda tan sencilla como antes.",
+  rir_what:"¿Qué significa RIR?",
+  rir_explain:"RIR significa «repeticiones en reserva». RIR 0 quiere decir que no era posible ni una más. RIR 2, que habrías podido hacer dos más. El valor ayuda a controlar la carga, evitar el sobreesfuerzo y progresar de forma sostenida. (Redacción de tu material del curso.)",
   hours_bias:"Este método suele salir 0,10–0,15 más bajo que el factor de día completo, porque el sueño con 0,95 arrastra un tercio del día. La referencia de tu curso es el factor: usa la rejilla de horas solo como comprobación.",
   act_title:"Actividad",
   act_simple:"Elegir factor",
@@ -931,7 +949,7 @@ function defaultState(){
     ex[id] = {w:v.weight??null, r:(typeof v.reps==='string'?v.reps:String(v.reps??'')), s:v.sets??null, hist:[]};
   }
   return {
-    lang:'de', theme:'auto', split:'split4', dayIdx:0, fav:null, ts:0,
+    lang:'de', theme:'auto', split:'split4', dayIdx:0, fav:null, ts:0, rirOn:false,
     sel:{}, ex, custom:{},
     meas:{ gewicht: DATA.weightSeed.map(e=>({d:e.date,v:e.value})),
            bauch: (DATA.bodySeed.bauch||[]).map(e=>({d:e.date,v:e.value})) },
@@ -1190,6 +1208,8 @@ function renderTrain(){
   });
   h += '</div>';
   h += `<div class="note" style="margin:0 2px 10px">${esc(t('fav_hint'))}</div>`;
+  if(S.rirOn) h += `<details class="acc" data-acc="train-rir" style="margin:0 0 10px"><summary><span>${esc(t('rir_what'))}</span></summary><div class="accbody">
+    <div class="note" style="margin:0">${esc(t('rir_explain'))}</div></div></details>`;
   const day = sp.days[S.dayIdx];
   day.slots.forEach((slot,si)=>{
     const eid = slotExercise(sp.id, S.dayIdx, si);
@@ -1202,8 +1222,8 @@ function renderTrain(){
       <div class="exhead"><div style="min-width:0">
         <div class="expat">${esc(t('pat_'+slot.pattern))}</div>
         <button class="exname" onclick="openPicker('${sp.id}',${S.dayIdx},${si})">${esc(exName(eid))} <span class="sw">⇄ ${esc(t('swap'))}</span></button>
-        <div class="extarget">${esc(t('target'))}: ${esc(slot.rep)} ${esc(t('reps'))} × ${slot.set} ${esc(t('sets'))}</div>
-        ${ll? `<div class="exlast">${esc(t('last'))}: <b>${fmt(ll.w, ll.w%1?1:0)} ${t('kg')}</b> × ${esc(ll.r??'–')}${ll.s?' ('+ll.s+' '+t('sets')+')':''}${ll.d?' · '+fmtDate(ll.d):''}</div>` : `<div class="exlast">${esc(t('no_data'))}</div>`}
+        <div class="extarget">${esc(t('target'))}: ${esc(slot.rep)} ${esc(t('reps'))} × ${slot.set} ${esc(t('sets'))}${(S.rirOn && slot.rir!=null)? ' · RIR '+slot.rir : ''}</div>
+        ${ll? `<div class="exlast">${esc(t('last'))}: <b>${fmt(ll.w, ll.w%1?1:0)} ${t('kg')}</b> × ${esc(ll.r??'–')}${(S.rirOn && ll.rir!=null)?' @RIR '+ll.rir:''}${ll.s?' ('+ll.s+' '+t('sets')+')':''}${ll.d?' · '+fmtDate(ll.d):''}</div>` : `<div class="exlast">${esc(t('no_data'))}</div>`}
       </div></div>
       <div class="exrow">
         <div class="fld" style="flex:1.4"><label>${esc(t('weight'))} (${t('kg')})</label>
@@ -1216,9 +1236,11 @@ function renderTrain(){
           <div class="numwrap"><input type="text" inputmode="numeric" id="r_${eid}_${si}" value="${esc(r??'')}" onchange="S.ex['${eid}']=S.ex['${eid}']||{hist:[]};S.ex['${eid}'].r=this.value;save()"></div></div>
         <div class="fld"><label>${esc(t('sets'))}</label>
           <div class="numwrap"><input type="number" inputmode="numeric" id="s_${eid}_${si}" value="${sets??''}" onchange="S.ex['${eid}']=S.ex['${eid}']||{hist:[]};S.ex['${eid}'].s=+this.value;save()"></div></div>
+        ${S.rirOn? `<div class="fld"><label>RIR</label>
+          <div class="numwrap"><input type="number" inputmode="numeric" min="0" max="6" id="rir_${eid}_${si}" value="${st.rir??(slot.rir??'')}" onchange="S.ex['${eid}']=S.ex['${eid}']||{hist:[]};S.ex['${eid}'].rir=this.value===''?null:+this.value;save()"></div></div>`:''}
         <button class="btn savebtn" onclick="logSet('${eid}',${si})">✓</button>
       </div>
-      ${st.hist && st.hist.length ? `<div class="histwrap">${esc(t('history'))}: ${st.hist.slice(-5).reverse().map(x=>`<span class="histchip">${fmtDate(x.d)} · ${fmt(x.w,x.w%1?1:0)}${t('kg')}×${esc(x.r??'')}</span>`).join('')}</div>`:''}
+      ${st.hist && st.hist.length ? `<div class="histwrap">${esc(t('history'))}: ${st.hist.slice(-5).reverse().map(x=>`<span class="histchip">${fmtDate(x.d)} · ${fmt(x.w,x.w%1?1:0)}${t('kg')}×${esc(x.r??'')}${(S.rirOn && x.rir!=null)?' @'+x.rir:''}</span>`).join('')}</div>`:''}
     </div>`;
   });
   const done = day.slots.every((sl,si)=>{ const e=S.ex[slotExercise(sp.id,S.dayIdx,si)];
@@ -1232,6 +1254,7 @@ function finishDay(){
   S.dayIdx = (S.dayIdx+1) % sp.days.length;
   save(); toast(t('train_finished')); renderTrain(); window.scrollTo(0,0);
 }
+function setRir(on){ S.rirOn = !!on; save(); renderMore(); }
 function toggleFav(id){
   S.fav = (S.fav===id) ? null : id;
   save(); renderTrain();
@@ -1252,8 +1275,11 @@ function logSet(eid, si){
   if(wEl && wEl.value!=='') e.w = +wEl.value;
   if(rEl) e.r = rEl.value;
   if(sEl && sEl.value!=='') e.s = +sEl.value;
+  const rEl2 = document.getElementById(`rir_${eid}_${si}`);
+  if(rEl2) e.rir = rEl2.value===''? null : +rEl2.value;
   const d = todayISO();
   const entry = {d, w:e.w, r:e.r, s:e.s};
+  if(e.rir!=null) entry.rir = e.rir;
   if(e.hist.length && e.hist[e.hist.length-1].d === d) e.hist[e.hist.length-1] = entry;
   else e.hist.push(entry);
   if(e.hist.length>60) e.hist = e.hist.slice(-60);
@@ -2578,12 +2604,18 @@ function renderMore(){
         <button class="${S.lang==='en'?'on':''}" onclick="setLang('en')">English</button>
         <button class="${S.lang==='es'?'on':''}" onclick="setLang('es')">Español</button>
       </div></div>
-    <div class="fld"><label>${esc(t('theme'))}</label>
+    <div class="fld" style="margin-bottom:10px"><label>${esc(t('theme'))}</label>
       <div class="seg">
         <button class="${S.theme==='auto'?'on':''}" onclick="setTheme('auto')">${esc(t('theme_auto'))}</button>
         <button class="${S.theme==='light'?'on':''}" onclick="setTheme('light')">${esc(t('theme_light'))}</button>
         <button class="${S.theme==='dark'?'on':''}" onclick="setTheme('dark')">${esc(t('theme_dark'))}</button>
       </div></div>
+    <div class="fld"><label>${esc(t('rir_setting'))}</label>
+      <div class="seg">
+        <button class="${!S.rirOn?'on':''}" onclick="setRir(false)">${esc(t('rir_off'))}</button>
+        <button class="${S.rirOn?'on':''}" onclick="setRir(true)">${esc(t('rir_on'))}</button>
+      </div></div>
+    <div class="note" style="margin-top:8px">${esc(t('rir_setting_note'))}</div>
   </div>
   <div class="card"><h3 style="margin-top:0">${esc(t('backup'))}</h3>
     <div class="note" style="margin-bottom:10px">${esc(t('backup_note'))}</div>
