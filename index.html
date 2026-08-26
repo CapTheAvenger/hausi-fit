@@ -299,6 +299,9 @@ details.acc .accbody{padding:0 14px 12px}
     <div class="loginerr" id="loginErr"></div>
     <div class="logincenter"><button class="loginlink" id="modeToggle" onclick="toggleAuthMode()"></button></div>
     <div class="logincenter"><button class="loginlink" id="pwReset" onclick="doReset()"></button></div>
+    <div class="orsep" id="orsep2"></div>
+    <button class="btn sec lbtn" id="guestBtn" onclick="startGuest()"></button>
+    <div class="note" id="guestNote" style="text-align:center;margin-top:8px"></div>
   </div>
 </div>
 
@@ -311,6 +314,38 @@ const CT = {"45° Beinpresse hohe Fußstellung":{"de":"45° Beinpresse hohe Fuß
 const I18N = {
 de:{
   tab_home:"Start",
+  abs_q:"Warum steht so wenig Bauchtraining im Plan?",
+  abs_a:"Weil dein Kurs ausdrücklich davon abrät. In den Plänen stehen vor allem Verbundübungen, die den Rumpf ohnehin mitbeanspruchen. Ein Sixpack entsteht nicht durch Crunches, sondern dadurch, dass die vorhandenen Bauchmuskeln aus dem Speckmantel auftauchen – das erledigt das Kaloriendefizit. Zusätzliches Bauchtraining ist erlaubt und schadet nicht, es ist nur ineffektiv. In Sjards eigenen Plänen kommt es in 2 von 15 vor, mit je 2 Sätzen.",
+  guest_start:"Ohne Konto starten",
+  guest_note:"Alles läuft lokal auf diesem Gerät. Ein Konto brauchst du erst, wenn deine Daten den Handywechsel überleben sollen – kannst du jederzeit später anlegen.",
+  dash_hi_name:"Hi {n} 👋",
+  su0_title:"Willkommen",
+  su0_sub:"Fünf kurze Schritte, dann steht dein Plan. Die Reihenfolge ist die aus deinem Kurs.",
+  su0_name:"Wie heißt du?",
+  su0_ph:"Dein Name",
+  su0_goal:"Was ist dein Ziel?",
+  su0_lose:"Abnehmen",
+  su0_hold:"Gewicht halten",
+  su0_gain:"Muskeln aufbauen",
+  su1_title:"Deine Daten",
+  su1_sub:"Mehr als diese vier Angaben braucht der Grundumsatz nicht.",
+  su2_title:"Wie aktiv ist dein Alltag?",
+  su3_title:"Dein Tagesziel",
+  su3_sub:"Das ist deine Startzahl. Nach 14 Tagen rechnet die App aus deinem Gewichtsverlauf nach, ob sie stimmt.",
+  su3_target:"Zielkalorien pro Tag",
+  su3_note:"Grundumsatz {bmr} kcal × Aktivitätsfaktor {af}, davon dein Defizit. Alles im Rechner nachjustierbar.",
+  su4_title:"Trainingsplan wählen",
+  su4_sub:"Der beste Plan ist der, den du langfristig durchhältst. Entscheide nach Trainingserfahrung, Anzahl Trainingstage und bevorzugtem Stil.",
+  su_back:"Zurück",
+  su_next:"Weiter",
+  su_done:"Los geht's",
+  su_skip:"Setup überspringen",
+  su_demo:"Nur mal reinschauen?",
+  su_demo_link:"Beispieldaten laden",
+  split4_sub:"4 Tage · Oberkörper, Beine, Drücken, Ziehen. Jede Muskelgruppe zweimal die Woche.",
+  split2_sub:"2 Tage · Unterkörper und Oberkörper getrennt. Wenig Zeit, trotzdem alles dran.",
+  split3_sub:"3 Tage · Drücken (Brust, Schulter, Trizeps), Ziehen (Rücken, Bizeps), Beine.",
+  split5_sub:"5 Tage · Ober-/Unterkörper plus Drücken, Ziehen, Beine. Nur sinnvoll, wenn du fünf Tage zuverlässig schaffst.",
   warn_bioavail:"{ca} mg Calcium am Tag hemmen die Aufnahme von Eisen ({fe} %) und Zink ({zn} %) spürbar. Auf dem Papier gedeckt heißt hier nicht im Körper angekommen. Iss Milchprodukte zeitlich getrennt von deinen Eisen- und Zinkquellen, oder nimm Vitamin C dazu.",
   micro_vitamine:"Vitamin E",
   micro_b2:"Vitamin B2",
@@ -477,7 +512,7 @@ de:{
   bmrf_harris:"Harris-Benedict",
   bmrf_katch:"Katch-McArdle",
   bmr_formula_note:"Mifflin-St Jeor ist Standard: die einzige Gleichung ohne systematische Verzerrung bei Normal- und Übergewicht (Frankenfield 2005). Harris-Benedict überschätzt bei höherem Körperfettanteil. Katch-McArdle rechnet über die fettfreie Masse und ist nur bei GEMESSENEM Körperfett genauer – bei einer Bildschätzung nicht. Jede Formel hat individuell 200–400 kcal Streuung: nach 2–3 Wochen zählt dein eigener Gewichtsverlauf mehr als jede Gleichung.",
-  dash_title:"Übersicht", dash_hi:"Hi Jens 👋", dash_weight:"Aktuelles Gewicht", dash_since:"seit Start",
+  dash_title:"Übersicht", dash_hi:"Hi 👋", dash_weight:"Aktuelles Gewicht", dash_since:"seit Start",
   dash_target:"Tagesziel", dash_loss:"Ziel-Abnahme/Woche", dash_next:"Nächstes Training", dash_lastmeas:"Letzte Messung",
   dash_open:"Öffnen", dash_nodata:"Trag deine Daten ein", dash_macros_short:"E / F / KH",
   plan_title:"Dein Ernährungsplan", plan_sub:"Automatisch aus deinen Werten – in 5 Schritten wie im Kurs.",
@@ -606,6 +641,38 @@ de:{
 },
 en:{
   tab_home:"Home",
+  abs_q:"Why is there so little ab work in the plan?",
+  abs_a:"Because your course explicitly advises against it. The plans are built around compound lifts, which work the core anyway. A six-pack does not come from crunches but from the abs you already have emerging from the fat covering them – that is the calorie deficit's job. Extra ab work is allowed and does no harm, it is simply ineffective. In Sjard's own plans it appears in 2 of 15, with 2 sets each.",
+  guest_start:"Start without an account",
+  guest_note:"Everything runs locally on this device. You only need an account if your data should survive a change of phone – you can create one any time.",
+  dash_hi_name:"Hi {n} 👋",
+  su0_title:"Welcome",
+  su0_sub:"Five short steps and your plan is ready. The order is the one from your course.",
+  su0_name:"What is your name?",
+  su0_ph:"Your name",
+  su0_goal:"What is your goal?",
+  su0_lose:"Lose fat",
+  su0_hold:"Maintain weight",
+  su0_gain:"Build muscle",
+  su1_title:"Your data",
+  su1_sub:"Your basal rate needs nothing beyond these four.",
+  su2_title:"How active is your day?",
+  su3_title:"Your daily target",
+  su3_sub:"This is your starting number. After 14 days the app checks it against your weight trend.",
+  su3_target:"Target calories per day",
+  su3_note:"Basal rate {bmr} kcal × activity factor {af}, minus your deficit. All adjustable in the calculator.",
+  su4_title:"Choose a training plan",
+  su4_sub:"The best plan is the one you keep doing. Decide by training experience, number of training days and preferred style.",
+  su_back:"Back",
+  su_next:"Next",
+  su_done:"Let's go",
+  su_skip:"Skip setup",
+  su_demo:"Just looking around?",
+  su_demo_link:"Load sample data",
+  split4_sub:"4 days · upper body, legs, push, pull. Every muscle group twice a week.",
+  split2_sub:"2 days · lower and upper body separated. Little time, still everything covered.",
+  split3_sub:"3 days · push (chest, shoulders, triceps), pull (back, biceps), legs.",
+  split5_sub:"5 days · upper/lower plus push, pull, legs. Only worth it if you reliably manage five days.",
   warn_bioavail:"{ca} mg of calcium a day noticeably inhibits the absorption of iron ({fe} %) and zinc ({zn} %). Covered on paper is not the same as absorbed. Eat dairy separately from your iron and zinc sources, or add vitamin C.",
   micro_vitamine:"Vitamin E",
   micro_b2:"Vitamin B2",
@@ -772,7 +839,7 @@ en:{
   bmrf_harris:"Harris-Benedict",
   bmrf_katch:"Katch-McArdle",
   bmr_formula_note:"Mifflin-St Jeor is the default: the only equation without systematic bias across normal and overweight (Frankenfield 2005). Harris-Benedict overestimates at higher body fat. Katch-McArdle uses fat-free mass and is more accurate only with MEASURED body fat – not with a visual estimate. Every formula has an individual spread of 200–400 kcal: after 2–3 weeks your own weight trend beats any equation.",
-  dash_title:"Overview", dash_hi:"Hi Jens 👋", dash_weight:"Current weight", dash_since:"since start",
+  dash_title:"Overview", dash_hi:"Hi 👋", dash_weight:"Current weight", dash_since:"since start",
   dash_target:"Daily target", dash_loss:"Target loss/week", dash_next:"Next workout", dash_lastmeas:"Last measurement",
   dash_open:"Open", dash_nodata:"Enter your data", dash_macros_short:"P / F / C",
   plan_title:"Your nutrition plan", plan_sub:"Built automatically from your values – 5 steps like in the course.",
@@ -901,6 +968,38 @@ en:{
 },
 es:{
   tab_home:"Inicio",
+  abs_q:"¿Por qué hay tan poco abdominal en el plan?",
+  abs_a:"Porque tu curso lo desaconseja expresamente. Los planes se basan en ejercicios compuestos, que ya trabajan el core. Un six-pack no sale de los crunches, sino de que los abdominales que ya tienes asomen bajo la grasa: de eso se encarga el déficit calórico. El trabajo abdominal extra está permitido y no hace daño, simplemente es poco efectivo. En los planes de Sjard aparece en 2 de 15, con 2 series cada uno.",
+  guest_start:"Empezar sin cuenta",
+  guest_note:"Todo funciona localmente en este dispositivo. Solo necesitas una cuenta si tus datos deben sobrevivir a un cambio de móvil; puedes crearla cuando quieras.",
+  dash_hi_name:"¡Hola {n}! 👋",
+  su0_title:"Bienvenido",
+  su0_sub:"Cinco pasos breves y tu plan está listo. El orden es el de tu curso.",
+  su0_name:"¿Cómo te llamas?",
+  su0_ph:"Tu nombre",
+  su0_goal:"¿Cuál es tu objetivo?",
+  su0_lose:"Perder grasa",
+  su0_hold:"Mantener el peso",
+  su0_gain:"Ganar músculo",
+  su1_title:"Tus datos",
+  su1_sub:"El metabolismo basal no necesita más que estos cuatro datos.",
+  su2_title:"¿Qué tan activo es tu día?",
+  su3_title:"Tu objetivo diario",
+  su3_sub:"Este es tu punto de partida. A los 14 días la app lo contrasta con tu evolución de peso.",
+  su3_target:"Calorías objetivo por día",
+  su3_note:"Metabolismo basal {bmr} kcal × factor de actividad {af}, menos tu déficit. Todo ajustable en la calculadora.",
+  su4_title:"Elige un plan de entrenamiento",
+  su4_sub:"El mejor plan es el que mantienes. Decide según tu experiencia, los días de entrenamiento y el estilo que prefieras.",
+  su_back:"Atrás",
+  su_next:"Siguiente",
+  su_done:"Empezar",
+  su_skip:"Saltar configuración",
+  su_demo:"¿Solo echar un vistazo?",
+  su_demo_link:"Cargar datos de ejemplo",
+  split4_sub:"4 días · tren superior, piernas, empuje, tracción. Cada grupo muscular dos veces por semana.",
+  split2_sub:"2 días · tren inferior y superior separados. Poco tiempo y aun así todo cubierto.",
+  split3_sub:"3 días · empuje (pecho, hombro, tríceps), tracción (espalda, bíceps), piernas.",
+  split5_sub:"5 días · superior/inferior más empuje, tracción y piernas. Solo merece la pena si cumples cinco días.",
   warn_bioavail:"{ca} mg de calcio al día inhiben de forma notable la absorción de hierro ({fe} %) y zinc ({zn} %). Cubierto sobre el papel no es lo mismo que absorbido. Toma los lácteos separados de tus fuentes de hierro y zinc, o añade vitamina C.",
   micro_vitamine:"Vitamina E",
   micro_b2:"Vitamina B2",
@@ -1067,7 +1166,7 @@ es:{
   bmrf_harris:"Harris-Benedict",
   bmrf_katch:"Katch-McArdle",
   bmr_formula_note:"Mifflin-St Jeor es el estándar: la única ecuación sin sesgo sistemático en normopeso y sobrepeso (Frankenfield 2005). Harris-Benedict sobreestima con más grasa corporal. Katch-McArdle usa la masa libre de grasa y solo es más precisa con grasa corporal MEDIDA, no con una estimación visual. Toda fórmula tiene una dispersión individual de 200–400 kcal: tras 2–3 semanas tu propia evolución de peso vale más que cualquier ecuación.",
-  dash_title:"Resumen", dash_hi:"Hola Jens 👋", dash_weight:"Peso actual", dash_since:"desde el inicio",
+  dash_title:"Resumen", dash_hi:"¡Hola! 👋", dash_weight:"Peso actual", dash_since:"desde el inicio",
   dash_target:"Objetivo diario", dash_loss:"Pérdida objetivo/sem.", dash_next:"Próximo entreno", dash_lastmeas:"Última medida",
   dash_open:"Abrir", dash_nodata:"Introduce tus datos", dash_macros_short:"P / G / C",
   plan_title:"Tu plan de nutrición", plan_sub:"Generado con tus valores – 5 pasos como en el curso.",
@@ -1201,16 +1300,30 @@ function tc(s){ if(s==null) return s; const e = CT && CT[s]; if(!e) return s; re
 /* ================= State ================= */
 const LS_KEY = 'hausifit_v1';
 let S = null;
-function defaultState(){
+/* Die Beispieldaten (Jens' Trainingsgewichte und Gewichtsverlauf) gehoeren nur in die
+   Demo-Ansicht. Ein neuer Nutzer soll keine fremden Zahlen sehen, die aussehen wie seine. */
+function seedEx(){
   const ex = {};
   for(const [id,v] of Object.entries(DATA.seed)){
     ex[id] = {w:v.weight??null, r:(typeof v.reps==='string'?v.reps:String(v.reps??'')), s:v.sets??null, hist:[]};
   }
+  return ex;
+}
+function loadDemoData(){
+  S.ex = seedEx();
+  S.meas.gewicht = DATA.weightSeed.map(e=>({d:e.date,v:e.value}));
+  S.meas.bauch = (DATA.bodySeed.bauch||[]).map(e=>({d:e.date,v:e.value}));
+  S.setup = {done:true};
+  save(); renderAll(); showTab('home');
+}
+function defaultState(withDemo){
   return {
     lang:'de', theme:'auto', split:'split4', dayIdx:0, fav:null, ts:0, rirOn:false, restOn:true, steps:{},
-    sel:{}, ex, custom:{},
-    meas:{ gewicht: DATA.weightSeed.map(e=>({d:e.date,v:e.value})),
-           bauch: (DATA.bodySeed.bauch||[]).map(e=>({d:e.date,v:e.value})) },
+    name:'', guest:false, setup:{done:false, step:0},
+    sel:{}, ex: withDemo ? seedEx() : {}, custom:{},
+    meas: withDemo
+      ? { gewicht: DATA.weightSeed.map(e=>({d:e.date,v:e.value})), bauch:(DATA.bodySeed.bauch||[]).map(e=>({d:e.date,v:e.value})) }
+      : { gewicht: [] },
     measType:'gewicht',
     shop:{},
     microAmt:{}, cart:{}, myday:{sel:{}, kcal:0, minAmt:{}, maxAmt:{}, warm:2}, calcSaved:null,
@@ -1225,19 +1338,24 @@ function save(){
   try{ localStorage.setItem(LS_KEY, JSON.stringify(S)); }catch(e){}
   cloudSave();
 }
+const DEMO = new URLSearchParams(location.search).get('demo')==='1';
 function load(){
   try{
     const raw = localStorage.getItem(LS_KEY);
-    if(raw){ S = Object.assign(defaultState(), JSON.parse(raw)); return; }
+    if(raw){
+      S = Object.assign(defaultState(DEMO), JSON.parse(raw));
+      if(!S.setup) S.setup = {done:true, step:0};   /* Bestandsnutzer haben ihr Setup hinter sich */
+      return;
+    }
   }catch(e){}
-  S = defaultState();
+  S = defaultState(DEMO);
+  if(DEMO) S.setup = {done:true, step:0};
 }
 load();
 if(S.fav && DATA.splits.some(s=>s.id===S.fav)) S.split = S.fav;
 
 /* ================= Cloud sync (Firebase) ================= */
 var FB = null;            // set by the module script when Firebase is ready (var => window.FB)
-const DEMO = new URLSearchParams(location.search).get('demo')==='1';
 let cloudUser = null;
 let cloudTimer = null;
 let syncState = 'off';    // off | ok | err
@@ -1260,6 +1378,7 @@ async function onAuth(user){
   if(DEMO){ document.getElementById('login').classList.remove('open'); return; }
   cloudUser = user;
   if(!user){
+    if(S.guest){ document.getElementById('login').classList.remove('open'); setSync('off'); return; }
     document.getElementById('login').classList.add('open');
     setSync('off');
     renderLogin();
@@ -1315,6 +1434,14 @@ function renderLogin(){
   document.getElementById('loginBtn').textContent = authMode==='login' ? t('login') : t('register');
   document.getElementById('modeToggle').textContent = authMode==='login' ? t('to_register') : t('to_login');
   document.getElementById('pwReset').textContent = t('forgot');
+  const g = document.getElementById('guestBtn'); if(g) g.textContent = t('guest_start');
+  const gn = document.getElementById('guestNote'); if(gn) gn.textContent = t('guest_note');
+  const o2 = document.getElementById('orsep2'); if(o2) o2.textContent = t('or');
+}
+function startGuest(){
+  S.guest = true; save();
+  document.getElementById('login').classList.remove('open');
+  renderAll(); showTab('home');
 }
 function toggleAuthMode(){ authMode = authMode==='login'?'register':'login'; document.getElementById('loginErr').textContent=''; renderLogin(); }
 function authErr(e){
@@ -1474,7 +1601,101 @@ function setCheck(key, val){
   if(!Object.keys(S.check[d]).length) delete S.check[d];
   save(); renderHome();
 }
+/* Setup-Assistent — Reihenfolge nach Modul 7 des Kurses:
+   Stammdaten -> Schritt 1 Kalorien -> Schritt 2 Protein -> Schritt 3 Fett/KH -> Plan waehlen. */
+function setupNext(){ S.setup.step = Math.min(4, (S.setup.step||0)+1); save(); renderHome(); window.scrollTo(0,0); }
+function setupBack(){ S.setup.step = Math.max(0, (S.setup.step||0)-1); save(); renderHome(); window.scrollTo(0,0); }
+function setupFinish(){ S.setup = {done:true, step:4}; save(); renderAll(); showTab('home'); window.scrollTo(0,0); }
+function setupSkip(){ S.setup = {done:true, step:0}; save(); renderAll(); showTab('home'); }
+function setupName(v){ S.name = (v||'').trim().slice(0,24); save(); }
+function setupGoal(kind){
+  S.calc.deficit = kind==='lose' ? 20 : (kind==='hold' ? 0 : 0);
+  S.setup.goal = kind;
+  if(kind==='gain') S.calc.deficit = 0;
+  save(); renderHome();
+}
+function renderSetup(){
+  const c = S.calc, st = S.setup.step||0;
+  const R = calcAll(), m = macroCalc(R.intake);
+  const inp=(id,lab,val,step,extra)=>`<div class="fld"><label for="su_${id}">${esc(lab)}</label>
+    <input id="su_${id}" type="number" inputmode="decimal" step="${step||1}" min="0" value="${val}"
+      onchange="S.calc.${id}=+this.value;save();renderHome()" ${extra||''}></div>`;
+  let h = `<div style="display:flex;gap:4px;margin:14px 2px 10px">
+    ${[0,1,2,3,4].map(i=>`<div style="flex:1;height:4px;border-radius:2px;background:${i<=st?'var(--accent)':'var(--rule,rgba(128,128,128,.25))'}"></div>`).join('')}
+  </div>`;
+  if(st===0){
+    h += `<h2 style="margin:0 2px 4px">${esc(t('su0_title'))}</h2>
+      <div class="note" style="margin:0 2px 14px">${esc(t('su0_sub'))}</div>
+      <div class="card">
+        <div class="fld"><label for="su_name">${esc(t('su0_name'))}</label>
+          <input id="su_name" type="text" maxlength="24" value="${esc(S.name||'')}" placeholder="${esc(t('su0_ph'))}"
+            onchange="setupName(this.value)"></div>
+      </div>
+      <div class="card"><div class="note" style="margin:0 0 10px">${esc(t('su0_goal'))}</div>
+        ${[['lose','su0_lose'],['hold','su0_hold'],['gain','su0_gain']].map(([k,lab])=>
+          `<button class="btn ${S.setup.goal===k?'':'sec'}" style="width:100%;margin-bottom:8px" onclick="setupGoal('${k}')">${esc(t(lab))}</button>`).join('')}
+      </div>`;
+  } else if(st===1){
+    h += `<h2 style="margin:0 2px 4px">${esc(t('su1_title'))}</h2>
+      <div class="note" style="margin:0 2px 14px">${esc(t('su1_sub'))}</div>
+      <div class="card">
+        <div class="rowflex" style="margin-bottom:10px">
+          <div class="fld"><label>${esc(t('gender'))}</label><div class="seg">
+            <button class="${c.gender==='m'?'on':''}" onclick="S.calc.gender='m';save();renderHome()">${esc(t('male'))}</button>
+            <button class="${c.gender==='f'?'on':''}" onclick="S.calc.gender='f';save();renderHome()">${esc(t('female'))}</button>
+          </div></div>
+          ${inp('age',t('age'),c.age)}
+        </div>
+        <div class="rowflex">${inp('height',t('height'),c.height)}${inp('weight',t('cur_weight'),c.weight,0.1)}</div>
+      </div>`;
+  } else if(st===2){
+    const cur = afRowFor(R.afPick);
+    h += `<h2 style="margin:0 2px 4px">${esc(t('su2_title'))}</h2>
+      <div class="note" style="margin:0 2px 14px">${esc(t('af_intro'))}</div>`;
+    AF_ROWS.forEach(r=>{
+      const on = r===cur;
+      h += `<div class="card" style="margin:0 0 8px;padding:10px 12px;cursor:pointer;${on?'border-color:var(--accent)':''}" onclick="S.calc.af=${r.v};save();renderHome()">
+        <div style="display:flex;gap:10px;align-items:baseline">
+          <div style="font-weight:700;font-variant-numeric:tabular-nums;min-width:62px;color:${on?'var(--accent)':'inherit'}">${r.lo===r.hi?fmt(r.lo,1):fmt(r.lo,1)+'–'+fmt(r.hi,1)}</div>
+          <div style="flex:1;min-width:0"><div style="font-weight:${on?'650':'500'}">${esc(t(r.k))}</div>
+            <div class="note">${esc(t(r.k+'_ex'))}</div></div>
+          <div style="font-size:18px">${on?'✓':''}</div></div></div>`;
+    });
+  } else if(st===3){
+    h += `<h2 style="margin:0 2px 4px">${esc(t('su3_title'))}</h2>
+      <div class="note" style="margin:0 2px 14px">${esc(t('su3_sub'))}</div>
+      <div class="tiles" style="margin-bottom:12px">
+        <div class="tile big hl"><div class="tv">${fmt(R.intake)} <span class="tu">${t('kcal')}</span></div><div class="tl">${esc(t('su3_target'))}</div></div>
+      </div>
+      <div class="card"><table class="mini"><tbody>
+        <tr><td>${esc(t('protein'))}</td><td class="num"><b>${fmt(m.p)}</b> ${t('g')}</td></tr>
+        <tr><td>${esc(t('fat'))}</td><td class="num"><b>${fmt(m.f)}</b> ${t('g')}</td></tr>
+        <tr><td>${esc(t('carbs'))}</td><td class="num"><b>${fmt(m.c)}</b> ${t('g')}</td></tr>
+      </tbody></table>
+      <div class="note" style="margin-top:10px">${esc(t('su3_note').replace('{bmr}',fmt(R.bmr)).replace('{af}',fmt(R.pal,2)))}</div></div>`;
+  } else {
+    h += `<h2 style="margin:0 2px 4px">${esc(t('su4_title'))}</h2>
+      <div class="note" style="margin:0 2px 14px">${esc(t('su4_sub'))}</div>`;
+    for(const sp of DATA.splits){
+      const on = S.split===sp.id;
+      h += `<div class="card" style="margin:0 0 8px;padding:10px 12px;cursor:pointer;${on?'border-color:var(--accent)':''}" onclick="S.split='${sp.id}';S.dayIdx=0;save();renderHome()">
+        <div style="display:flex;gap:10px;align-items:baseline">
+          <div style="flex:1;min-width:0"><div style="font-weight:${on?'700':'600'}">${esc(t(sp.nameKey))}</div>
+            <div class="note">${esc(t(sp.nameKey+'_sub'))}</div></div>
+          <div style="font-size:18px">${on?'✓':''}</div></div></div>`;
+    }
+  }
+  h += `<div style="display:flex;gap:8px;margin:14px 0 6px">
+    ${st>0? `<button class="btn sec" style="flex:1" onclick="setupBack()">${esc(t('su_back'))}</button>`:''}
+    ${st<4? `<button class="btn" style="flex:2" onclick="setupNext()">${esc(t('su_next'))}</button>`
+          : `<button class="btn" style="flex:2" onclick="setupFinish()">${esc(t('su_done'))}</button>`}
+  </div>
+  <div style="text-align:center;margin-bottom:10px"><button class="loginlink" onclick="setupSkip()">${esc(t('su_skip'))}</button></div>
+  ${st===0? `<div class="note" style="text-align:center">${esc(t('su_demo'))} <a href="#" onclick="event.preventDefault();loadDemoData()" style="color:var(--accent)">${esc(t('su_demo_link'))}</a></div>`:''}`;
+  document.getElementById('v-home').innerHTML = h;
+}
 function renderHome(){
+  if(S.setup && !S.setup.done) return renderSetup();
   const R = calcAll();
   const md = macroCalc(R.intake);
   const gw = (S.meas.gewicht||[]).slice().sort((a,b)=>a.d<b.d?-1:1);
@@ -1487,7 +1708,7 @@ function renderHome(){
   // latest body measurement (non-weight)
   let lastMeas = null;
   for(const k of MEAS_TYPES){ if(k==='gewicht') continue; const a=S.meas[k]||[]; if(a.length){ const e=a[a.length-1]; if(!lastMeas || e.d>lastMeas.d) lastMeas={t:k,...e}; } }
-  let h = `<h2 style="margin:6px 2px 2px">${esc(t('dash_hi'))}</h2>
+  let h = `<h2 style="margin:6px 2px 2px">${esc(S.name? t('dash_hi_name').replace('{n}', S.name) : t('dash_hi'))}</h2>
     <div class="note" style="margin:0 2px 12px">${new Date().toLocaleDateString(S.lang==='de'?'de-DE':(S.lang==='es'?'es-ES':'en-US'),{weekday:'long', day:'numeric', month:'long'})}</div>`;
   h += `<div class="tiles">`;
   // weight tile
@@ -1589,6 +1810,7 @@ function renderTrain(){
     h += `<button class="chip ${i===S.dayIdx?'on':''}" onclick="S.dayIdx=${i};save();renderTrain()">${esc(t(d.nameKey))}</button>`;
   });
   h += '</div>';
+  h += `<div class="note" style="margin:0 2px 4px">${esc(t(sp.nameKey+'_sub'))}</div>`;
   h += `<div class="note" style="margin:0 2px 10px">${esc(t('fav_hint'))}</div>`;
   if(S.rirOn) h += `<details class="acc" data-acc="train-rir" style="margin:0 0 10px"><summary><span>${esc(t('rir_what'))}</span></summary><div class="accbody">
     <div class="note" style="margin:0">${esc(t('rir_explain'))}</div></div></details>`;
@@ -1631,6 +1853,8 @@ function renderTrain(){
       ${st.hist && st.hist.length ? `<div class="histwrap">${esc(t('history'))}: ${st.hist.slice(-5).reverse().map(x=>`<span class="histchip">${fmtDate(x.d)} · ${fmt(x.w,x.w%1?1:0)}${t('kg')}×${esc(x.r??'')}${(S.rirOn && x.rir!=null)?' @'+x.rir:''}</span>`).join('')}</div>`:''}
     </div>`;
   });
+  h += `<details class="acc" data-acc="train-abs" style="margin:2px 0 10px"><summary><span>${esc(t('abs_q'))}</span></summary><div class="accbody">
+    <div class="note" style="margin:0">${esc(t('abs_a'))}</div></div></details>`;
   const done = day.slots.every((sl,si)=>{ const e=S.ex[slotExercise(sp.id,S.dayIdx,si)];
     return e && e.hist && e.hist.length && e.hist[e.hist.length-1].d===todayISO(); });
   h += `<button class="btn ${done?'':'sec'}" style="width:100%;margin:4px 0 10px" onclick="finishDay()">✓ ${esc(t('train_finish'))}</button>
