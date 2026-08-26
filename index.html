@@ -425,7 +425,7 @@ de:{
   steps_af_hi:"Über 5.000 Schritten – im Rechner ist das die Zeile 1,6–1,7. Mit 2–4 Krafteinheiten pro Woche sogar 1,8–1,9.",
   steps_basis:"Schnitt aus {n} erfassten Tagen",
   steps_hint:"Trag deine Schritte ein – die Zeile im Aktivitätsfaktor hängt daran, und „2.000 Schritte mehr\" ist der zweite Anpassungshebel deines Kurses, wenn es stockt.",
-  dash_weight_trend:"Gleitendes Gewicht",
+  dash_weight_stale:"Letzte Messung vor {n} Tagen – hier steht dein Wert aus dem Rechner. Trag dein Gewicht unter Messungen ein, dann rechnet der Trend wieder mit.", dash_weight_trend:"Gleitendes Gewicht",
   trend_weight:"Gleitendes Gewicht (7 Tage)",
   raw_weight:"Letzter Tageswert",
   trend_rate:"Veränderung pro Woche",
@@ -752,7 +752,7 @@ en:{
   steps_af_hi:"Above 5,000 steps – in the calculator that is row 1.6–1.7. With 2–4 strength sessions a week, even 1.8–1.9.",
   steps_basis:"Average across {n} logged days",
   steps_hint:"Log your steps – the activity factor row depends on them, and \"2,000 more steps\" is your course's second adjustment lever when progress stalls.",
-  dash_weight_trend:"Trend weight",
+  dash_weight_stale:"Last measurement {n} days ago – this is your value from the calculator. Log your weight under Measurements and the trend picks up again.", dash_weight_trend:"Trend weight",
   trend_weight:"Trend weight (7 days)",
   raw_weight:"Latest daily value",
   trend_rate:"Change per week",
@@ -1079,7 +1079,7 @@ es:{
   steps_af_hi:"Más de 5.000 pasos: en la calculadora es la fila 1,6–1,7. Con 2–4 sesiones de fuerza por semana, incluso 1,8–1,9.",
   steps_basis:"Media de {n} días registrados",
   steps_hint:"Registra tus pasos: la fila del factor de actividad depende de ellos, y «2.000 pasos más» es la segunda palanca de ajuste de tu curso cuando se estanca.",
-  dash_weight_trend:"Peso suavizado",
+  dash_weight_stale:"Última medición hace {n} días – aquí ves tu valor de la calculadora. Registra tu peso en Mediciones y la tendencia vuelve a contar.", dash_weight_trend:"Peso suavizado",
   trend_weight:"Peso suavizado (7 días)",
   raw_weight:"Último valor diario",
   trend_rate:"Cambio por semana",
@@ -1605,7 +1605,15 @@ function setCheck(key, val){
    Stammdaten -> Schritt 1 Kalorien -> Schritt 2 Protein -> Schritt 3 Fett/KH -> Plan waehlen. */
 function setupNext(){ S.setup.step = Math.min(4, (S.setup.step||0)+1); save(); renderHome(); window.scrollTo(0,0); }
 function setupBack(){ S.setup.step = Math.max(0, (S.setup.step||0)-1); save(); renderHome(); window.scrollTo(0,0); }
-function setupFinish(){ S.setup = {done:true, step:4}; save(); renderAll(); showTab('home'); window.scrollTo(0,0); }
+/* Wer im Assistenten das vorausgefuellte Gewicht nur mit "Weiter" bestaetigt, loest KEIN
+   onchange aus — dann waere die Zahl nie als Messung von heute gelandet und die Startseite
+   haette weiter den alten Trend gezeigt. Deshalb beim Abschluss immer uebernehmen. */
+function setupFinish(){
+  S.setup = {done:true, step:4};
+  const w = +S.calc.weight||0;
+  if(w>0) logWeight(todayISO(), w);
+  save(); renderAll(); showTab('home'); window.scrollTo(0,0);
+}
 function setupSkip(){ S.setup = {done:true, step:0}; save(); renderAll(); showTab('home'); }
 function setupName(v){ S.name = (v||'').trim().slice(0,24); save(); }
 function setupGoal(kind){
@@ -1700,9 +1708,16 @@ function renderHome(){
   const md = macroCalc(R.intake);
   const gw = (S.meas.gewicht||[]).slice().sort((a,b)=>a.d<b.d?-1:1);
   const tw = weightTrend(gw);
+  /* weightTrend() ankert auf der JUENGSTEN Messung, nicht auf heute. Liegt die Wochen zurueck,
+     ist der "Trend" ein Wert von damals — der darf nicht als heutiges Gewicht dastehen.
+     Ab 10 Tagen ohne Messung zeigt die Kachel deshalb das Gewicht aus dem Rechner und sagt,
+     wie alt die letzte Messung ist. */
+  const staleDays = gw.length ? Math.round((dTime(todayISO()) - dTime(gw[gw.length-1].d))/DAYMS) : null;
+  const frisch = staleDays!=null && staleDays<=10;
   // ohne jede Messung zeigt die Kachel das Gewicht aus dem Rechner statt eines Strichs
-  const showW = tw ? (tw.enough && tw.cur!=null ? tw.cur : tw.raw) : (+S.calc.weight||null);
-  const delta = tw && tw.sinceStart!=null && tw.enough ? tw.sinceStart : (gw.length>=2 ? gw[gw.length-1].v-gw[0].v : null);
+  const showW = (tw && frisch) ? (tw.enough && tw.cur!=null ? tw.cur : tw.raw) : (+S.calc.weight || (tw?tw.raw:null));
+  const delta = !frisch ? null
+    : (tw && tw.sinceStart!=null && tw.enough ? tw.sinceStart : (gw.length>=2 ? gw[gw.length-1].v-gw[0].v : null));
   // next workout
   const sp = getSplit(); const day = sp.days[S.dayIdx] || sp.days[0];
   const firstEx = day.slots.slice(0,3).map((sl,si)=>exName(slotExercise(sp.id, S.dayIdx, si))).join(', ');
@@ -1715,7 +1730,8 @@ function renderHome(){
   // weight tile
   h += `<div class="tile big hl" onclick="showTab('meas')" style="cursor:pointer">
     <div class="tv">${showW!=null? fmt(showW,1)+' <span class="tu">'+t('kg')+'</span>' : '–'}</div>
-    <div class="tl">${esc(t(tw&&tw.enough?'dash_weight_trend':'dash_weight'))}${delta!==null? ' · <b style="color:'+(delta<=0?'var(--good)':'var(--bad)')+'">'+(delta>0?'+':'')+fmt(delta,1)+' '+t('kg')+' '+t('dash_since')+'</b>':''}</div></div>`;
+    <div class="tl">${esc(t(frisch&&tw&&tw.enough?'dash_weight_trend':'dash_weight'))}${delta!==null? ' · <b style="color:'+(delta<=0?'var(--good)':'var(--bad)')+'">'+(delta>0?'+':'')+fmt(delta,1)+' '+t('kg')+' '+t('dash_since')+'</b>':''}</div>
+    ${(!frisch && staleDays!=null)? `<div class="note" style="margin-top:5px">${esc(t('dash_weight_stale').replace('{n}', staleDays))}</div>`:''}</div>`;
   // target calories
   h += `<div class="tile" onclick="showTab('calc')" style="cursor:pointer"><div class="tv">${fmt(R.intake)}</div><div class="tl">${esc(t('dash_target'))} (${t('kcal')})</div></div>`;
   // loss/week
