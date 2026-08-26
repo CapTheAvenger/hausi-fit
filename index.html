@@ -311,6 +311,21 @@ const CT = {"45° Beinpresse hohe Fußstellung":{"de":"45° Beinpresse hohe Fuß
 const I18N = {
 de:{
   tab_home:"Start",
+  m_schritte:"Schritte",
+  steps_unit:"Schritte",
+  steps_today:"Schritte heute",
+  steps_avg7:"Schnitt der letzten 7 Tage",
+  steps_af_lo:"Unter 5.000 Schritten – im Rechner ist das die Zeile 1,4–1,5 (fast ausschließlich sitzend).",
+  steps_af_hi:"Über 5.000 Schritten – im Rechner ist das die Zeile 1,6–1,7. Mit 2–4 Krafteinheiten pro Woche sogar 1,8–1,9.",
+  steps_basis:"Schnitt aus {n} erfassten Tagen",
+  steps_hint:"Trag deine Schritte ein – die Zeile im Aktivitätsfaktor hängt daran, und „2.000 Schritte mehr\" ist der zweite Anpassungshebel deines Kurses, wenn es stockt.",
+  dash_weight_trend:"Gleitendes Gewicht",
+  trend_weight:"Gleitendes Gewicht (7 Tage)",
+  raw_weight:"Letzter Tageswert",
+  trend_rate:"Veränderung pro Woche",
+  trend_rate_pct:"davon in % Körpergewicht",
+  trend_note:"Der Tageswert schwankt über Wasser, Salz und Darminhalt um ein bis zwei Kilo. Nur der 7-Tage-Schnitt zeigt, wohin es wirklich geht. Zielband: 0,5–1,0 % Körpergewicht pro Woche.",
+  trend_tooshort:"Für einen belastbaren Trend brauchst du mindestens vier Einträge über eine Woche. Wieg dich täglich – morgens, nüchtern, nach dem Klo.",
   rir_setting:"RIR mitschreiben",
   rir_off:"aus",
   rir_on:"an",
@@ -520,6 +535,21 @@ de:{
 },
 en:{
   tab_home:"Home",
+  m_schritte:"Steps",
+  steps_unit:"steps",
+  steps_today:"Steps today",
+  steps_avg7:"7-day average",
+  steps_af_lo:"Below 5,000 steps – in the calculator that is row 1.4–1.5 (almost entirely seated).",
+  steps_af_hi:"Above 5,000 steps – in the calculator that is row 1.6–1.7. With 2–4 strength sessions a week, even 1.8–1.9.",
+  steps_basis:"Average across {n} logged days",
+  steps_hint:"Log your steps – the activity factor row depends on them, and \"2,000 more steps\" is your course's second adjustment lever when progress stalls.",
+  dash_weight_trend:"Trend weight",
+  trend_weight:"Trend weight (7 days)",
+  raw_weight:"Latest daily value",
+  trend_rate:"Change per week",
+  trend_rate_pct:"of that in % body weight",
+  trend_note:"The daily value swings by one to two kilos through water, salt and gut content. Only the 7-day average shows where things are actually going. Target band: 0.5–1.0 % of body weight per week.",
+  trend_tooshort:"A reliable trend needs at least four entries across a week. Weigh yourself daily – morning, fasted, after the bathroom.",
   rir_setting:"Track RIR",
   rir_off:"off",
   rir_on:"on",
@@ -729,6 +759,21 @@ en:{
 },
 es:{
   tab_home:"Inicio",
+  m_schritte:"Pasos",
+  steps_unit:"pasos",
+  steps_today:"Pasos de hoy",
+  steps_avg7:"Media de 7 días",
+  steps_af_lo:"Menos de 5.000 pasos: en la calculadora es la fila 1,4–1,5 (casi siempre sentado).",
+  steps_af_hi:"Más de 5.000 pasos: en la calculadora es la fila 1,6–1,7. Con 2–4 sesiones de fuerza por semana, incluso 1,8–1,9.",
+  steps_basis:"Media de {n} días registrados",
+  steps_hint:"Registra tus pasos: la fila del factor de actividad depende de ellos, y «2.000 pasos más» es la segunda palanca de ajuste de tu curso cuando se estanca.",
+  dash_weight_trend:"Peso suavizado",
+  trend_weight:"Peso suavizado (7 días)",
+  raw_weight:"Último valor diario",
+  trend_rate:"Cambio por semana",
+  trend_rate_pct:"de ello en % del peso",
+  trend_note:"El valor diario oscila uno o dos kilos por agua, sal y contenido intestinal. Solo la media de 7 días muestra hacia dónde va de verdad. Rango objetivo: 0,5–1,0 % del peso por semana.",
+  trend_tooshort:"Para una tendencia fiable necesitas al menos cuatro registros a lo largo de una semana. Pésate a diario: por la mañana, en ayunas, después del baño.",
   rir_setting:"Registrar RIR",
   rir_off:"no",
   rir_on:"sí",
@@ -949,7 +994,7 @@ function defaultState(){
     ex[id] = {w:v.weight??null, r:(typeof v.reps==='string'?v.reps:String(v.reps??'')), s:v.sets??null, hist:[]};
   }
   return {
-    lang:'de', theme:'auto', split:'split4', dayIdx:0, fav:null, ts:0, rirOn:false,
+    lang:'de', theme:'auto', split:'split4', dayIdx:0, fav:null, ts:0, rirOn:false, steps:{},
     sel:{}, ex, custom:{},
     meas:{ gewicht: DATA.weightSeed.map(e=>({d:e.date,v:e.value})),
            bauch: (DATA.bodySeed.bauch||[]).map(e=>({d:e.date,v:e.value})) },
@@ -1132,12 +1177,54 @@ function closeModal(){
 }
 
 /* ================= Dashboard ================= */
+/* Gleitendes Gewicht: Der Kurs nennt es den einzigen belastbaren Massstab —
+   der Tageswert schwankt ueber Wasser, Salz und Darminhalt um 1-2 kg. */
+const DAYMS = 86400000;
+function dTime(d){ return new Date(d+'T12:00:00').getTime(); }
+function weightTrend(raw){
+  const s = (raw||[]).slice().sort((a,b)=>a.d<b.d?-1:1);
+  if(!s.length) return null;
+  const now = dTime(s[s.length-1].d);
+  const avgAt = t => { const w = s.filter(e=>dTime(e.d)<=t && dTime(e.d)>t-7*DAYMS);
+    return w.length ? w.reduce((a,b)=>a+b.v,0)/w.length : null; };
+  const cur = avgAt(now), prev = avgAt(now-7*DAYMS);
+  const daysBack = Math.round((now-dTime(s[0].d))/DAYMS);
+  return {cur, prev, raw:s[s.length-1].v, rawDate:s[s.length-1].d, n:s.length, daysBack,
+    ratePerWeek: (cur!=null && prev!=null) ? cur-prev : null,
+    sinceStart: cur!=null ? cur - s[0].v : null,
+    enough: s.length>=4 && daysBack>=6};   /* darunter ist der Trend noch Rauschen */
+}
+/* Schritte: Kriterium der Aktivitaetsfaktor-Tabelle und zweiter Anpassungshebel des Kurses */
+function stepsArr(){ return Object.entries(S.steps||{}).map(([d,v])=>({d, v:+v||0})).sort((a,b)=>a.d<b.d?-1:1); }
+function stepsAvg(days){
+  const a = stepsArr(); if(!a.length) return null;
+  const t0 = dTime(todayISO()) - (days-1)*DAYMS;
+  const w = a.filter(e=>dTime(e.d) >= t0);
+  return w.length ? Math.round(w.reduce((x,y)=>x+y.v,0)/w.length) : null;
+}
+function stepsDays(days){
+  const t0 = dTime(todayISO()) - (days-1)*DAYMS;
+  return stepsArr().filter(e=>dTime(e.d) >= t0).length;
+}
+function setSteps(d, v){
+  S.steps = S.steps||{};
+  const n = Math.max(0, Math.min(100000, Math.round(+v||0)));
+  if(n>0) S.steps[d] = n; else delete S.steps[d];
+  save();
+}
+function addStepsToday(){
+  const el = document.getElementById('stepsIn');
+  if(!el) return;
+  setSteps(todayISO(), el.value);
+  toast(t('saved')); renderHome();
+}
 function renderHome(){
   const R = calcAll();
   const md = macroCalc(R.intake);
   const gw = (S.meas.gewicht||[]).slice().sort((a,b)=>a.d<b.d?-1:1);
-  const lastW = gw.length? gw[gw.length-1] : null;
-  const delta = gw.length>=2 ? gw[gw.length-1].v - gw[0].v : null;
+  const tw = weightTrend(gw);
+  const showW = tw ? (tw.enough && tw.cur!=null ? tw.cur : tw.raw) : null;
+  const delta = tw && tw.sinceStart!=null && tw.enough ? tw.sinceStart : (gw.length>=2 ? gw[gw.length-1].v-gw[0].v : null);
   // next workout
   const sp = getSplit(); const day = sp.days[S.dayIdx] || sp.days[0];
   const firstEx = day.slots.slice(0,3).map((sl,si)=>exName(slotExercise(sp.id, S.dayIdx, si))).join(', ');
@@ -1149,13 +1236,26 @@ function renderHome(){
   h += `<div class="tiles">`;
   // weight tile
   h += `<div class="tile big hl" onclick="showTab('meas')" style="cursor:pointer">
-    <div class="tv">${lastW? fmt(lastW.v,1)+' <span class="tu">'+t('kg')+'</span>' : '–'}</div>
-    <div class="tl">${esc(t('dash_weight'))}${delta!==null? ' · <b style="color:'+(delta<=0?'var(--good)':'var(--bad)')+'">'+(delta>0?'+':'')+fmt(delta,1)+' '+t('kg')+' '+t('dash_since')+'</b>':''}</div></div>`;
+    <div class="tv">${showW!=null? fmt(showW,1)+' <span class="tu">'+t('kg')+'</span>' : '–'}</div>
+    <div class="tl">${esc(t(tw&&tw.enough?'dash_weight_trend':'dash_weight'))}${delta!==null? ' · <b style="color:'+(delta<=0?'var(--good)':'var(--bad)')+'">'+(delta>0?'+':'')+fmt(delta,1)+' '+t('kg')+' '+t('dash_since')+'</b>':''}</div></div>`;
   // target calories
   h += `<div class="tile" onclick="showTab('calc')" style="cursor:pointer"><div class="tv">${fmt(R.intake)}</div><div class="tl">${esc(t('dash_target'))} (${t('kcal')})</div></div>`;
   // loss/week
   h += `<div class="tile" onclick="showTab('calc')" style="cursor:pointer"><div class="tv">${fmt(R.lossWeek,2)} <span class="tu">${t('kg')}</span></div><div class="tl">${esc(t('dash_loss'))}</div></div>`;
   h += `</div>`;
+  // Schritte heute + 7-Tage-Schnitt
+  const st7 = stepsAvg(7), stToday = (S.steps||{})[todayISO()];
+  h += `<div class="card"><div class="exrow" style="margin-top:0">
+      <div class="fld" style="flex:1.4"><label>${esc(t('steps_today'))}</label>
+        <div class="numwrap"><input type="number" inputmode="numeric" id="stepsIn" step="500" min="0" placeholder="0" value="${stToday??''}"><span class="numunit">${esc(t('steps_unit'))}</span></div></div>
+      <button class="btn savebtn" onclick="addStepsToday()">✓</button>
+    </div>
+    ${st7!=null? `<div class="statline" style="margin-top:6px"><span class="sl">${esc(t('steps_avg7'))}</span>
+      <span class="sv" style="color:${st7>=5000?'var(--good)':'var(--muted)'}">${fmt(st7)} ${esc(t('steps_unit'))}</span></div>
+      <div class="note" style="margin-top:2px">${esc(t('steps_basis').replace('{n}', stepsDays(7)))}</div>
+      <div class="note" style="margin-top:4px">${esc(t(st7>=5000?'steps_af_hi':'steps_af_lo'))}</div>`
+    : `<div class="note" style="margin-top:6px">${esc(t('steps_hint'))}</div>`}
+  </div>`;
   // macros row
   h += `<div class="card" onclick="showTab('calc')" style="cursor:pointer"><div class="statline"><span class="sl">${esc(t('dash_macros_short'))}</span>
     <span class="sv">${fmt(md.p)} / ${fmt(md.f)} / ${fmt(md.c)} ${t('g')}</span></div></div>`;
@@ -1704,27 +1804,41 @@ function renderCalc(){
 }
 
 /* ================= Measurements ================= */
-const MEAS_TYPES = ['gewicht','bauch','brust','taille','huefte','po','hals','oberarm_links','oberarm_rechts','oberschenkel_links','oberschenkel_rechts','wade_links','wade_rechts'];
+const MEAS_TYPES = ['gewicht','schritte','bauch','brust','taille','huefte','po','hals','oberarm_links','oberarm_rechts','oberschenkel_links','oberschenkel_rechts','wade_links','wade_rechts'];
 function renderMeas(){
   const type = S.measType;
-  const arr = (S.meas[type]||[]).slice().sort((a,b)=>a.d<b.d?-1:1);
-  const unit = type==='gewicht'?t('kg'):t('cm');
+  const isSteps = type==='schritte';
+  const arr = isSteps ? stepsArr() : (S.meas[type]||[]).slice().sort((a,b)=>a.d<b.d?-1:1);
+  const unit = isSteps ? t('steps_unit') : (type==='gewicht'?t('kg'):t('cm'));
   let h = `<h2>${esc(t('meas_title'))}</h2><div class="chips">`;
   for(const mt of MEAS_TYPES){
-    const n = (S.meas[mt]||[]).length;
+    const n = mt==='schritte' ? stepsArr().length : (S.meas[mt]||[]).length;
     h += `<button class="chip ${mt===type?'on':''}" onclick="S.measType='${mt}';save();renderMeas()">${esc(t('m_'+mt))}${n?` (${n})`:''}</button>`;
   }
   h += `</div>
   <div class="card"><div class="exrow" style="margin-top:0">
     <div class="fld" style="flex:1.3"><label>${esc(t('date'))}</label><input type="date" id="measDate" value="${todayISO()}"></div>
-    <div class="fld"><label>${esc(t('value'))} (${unit})</label><input type="number" inputmode="decimal" step="0.1" id="measVal" placeholder="0,0"></div>
+    <div class="fld"><label>${esc(t('value'))} (${unit})</label><input type="number" inputmode="decimal" step="${isSteps?'500':'0.1'}" id="measVal" placeholder="${isSteps?'0':'0,0'}"></div>
     <button class="btn savebtn" onclick="addMeas()">✓</button>
   </div></div>`;
-  if(arr.length>=2){
+  if(type==='gewicht'){
+    const tw = weightTrend(arr);
+    if(tw){
+      const rate = tw.ratePerWeek, kg = +S.calc.weight||80;
+      const pct = (rate!=null && kg>0) ? Math.abs(rate)/kg*100 : null;
+      h += `<div class="tiles" style="margin-bottom:6px">
+        <div class="tile big hl"><div class="tv">${tw.cur!=null? fmt(tw.cur,1):'–'} <span class="tu">${t('kg')}</span></div><div class="tl">${esc(t('trend_weight'))}</div></div>
+        <div class="tile"><div class="tv">${fmt(tw.raw,1)} <span class="tu">${t('kg')}</span></div><div class="tl">${esc(t('raw_weight'))} · ${fmtDate(tw.rawDate)}</div></div>
+        <div class="tile"><div class="tv" style="color:${rate==null?'':(rate<=0?'var(--good)':'var(--bad)')}">${rate!=null? (rate>0?'+':'')+fmt(rate,2):'–'} <span class="tu">${t('kg')}</span></div><div class="tl">${esc(t('trend_rate'))}</div></div>
+        <div class="tile"><div class="tv">${pct!=null? fmt(pct,2):'–'} <span class="tu">%</span></div><div class="tl">${esc(t('trend_rate_pct'))}</div></div>
+      </div>
+      <div class="note" style="margin:0 2px 12px">${esc(t(tw.enough?'trend_note':'trend_tooshort'))}</div>`;
+    }
+  } else if(arr.length>=2){
     const delta = arr[arr.length-1].v - arr[0].v;
     h += `<div class="tiles" style="margin-bottom:12px">
-      <div class="tile"><div class="tv">${fmt(arr[arr.length-1].v, 1)} <span class="tu">${unit}</span></div><div class="tl">${esc(t('last'))} · ${fmtDate(arr[arr.length-1].d)}</div></div>
-      <div class="tile"><div class="tv" style="color:${delta<=0?'var(--good)':'var(--bad)'}">${delta>0?'+':''}${fmt(delta,1)} <span class="tu">${unit}</span></div><div class="tl">${esc(t('since_start'))}</div></div>
+      <div class="tile"><div class="tv">${fmt(arr[arr.length-1].v, isSteps?0:1)} <span class="tu">${unit}</span></div><div class="tl">${esc(t('last'))} · ${fmtDate(arr[arr.length-1].d)}</div></div>
+      <div class="tile"><div class="tv" style="color:${(isSteps? delta>=0 : delta<=0)?'var(--good)':'var(--bad)'}">${delta>0?'+':''}${fmt(delta,isSteps?0:1)} <span class="tu">${unit}</span></div><div class="tl">${esc(t('since_start'))}</div></div>
     </div>`;
   }
   h += `<div class="card"><div class="legend" id="legend"></div><div class="chartbox" id="chart" style="position:relative"></div></div>`;
@@ -1732,8 +1846,12 @@ function renderMeas(){
     h += `<div class="card"><h3 style="margin-top:0">${esc(t('entries'))}</h3>`;
     const recent = arr.slice().reverse().slice(0,15);
     for(const e of recent){
-      const idx = (S.meas[type]||[]).findIndex(x=>x.d===e.d && x.v===e.v);
-      h += `<div class="list-item"><span>${fmtDate(e.d)}</span><span style="font-weight:650;font-variant-numeric:tabular-nums">${fmt(e.v,1)} ${unit}</span><button class="del" onclick="delMeas(${idx})">✕</button></div>`;
+      if(isSteps){
+        h += `<div class="list-item"><span>${fmtDate(e.d)}</span><span style="font-weight:650;font-variant-numeric:tabular-nums">${fmt(e.v)} ${unit}</span><button class="del" onclick="setSteps('${e.d}',0);renderMeas()">✕</button></div>`;
+      } else {
+        const idx = (S.meas[type]||[]).findIndex(x=>x.d===e.d && x.v===e.v);
+        h += `<div class="list-item"><span>${fmtDate(e.d)}</span><span style="font-weight:650;font-variant-numeric:tabular-nums">${fmt(e.v,1)} ${unit}</span><button class="del" onclick="delMeas(${idx})">✕</button></div>`;
+      }
     }
     h += `</div>`;
   }
@@ -1744,6 +1862,7 @@ function addMeas(){
   const d = document.getElementById('measDate').value;
   const v = parseFloat(document.getElementById('measVal').value);
   if(!d || isNaN(v)) return;
+  if(S.measType==='schritte'){ setSteps(d, v); toast(t('saved')); renderMeas(); return; }
   S.meas[S.measType] = S.meas[S.measType]||[];
   const arr = S.meas[S.measType];
   const ex = arr.findIndex(x=>x.d===d);
